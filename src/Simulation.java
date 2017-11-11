@@ -15,7 +15,7 @@ public class Simulation {
         }
     }
 
-    public ArrayList<Entity> entitiesWithinRadius() {
+    public ArrayList<Entity> entitiesWithinRadius(double radius) {
         return null;
     }
 
