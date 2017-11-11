@@ -21,7 +21,14 @@ public  class Main {
         SimulationRenderer simulationRenderer = new SimulationRenderer(simulation);
         window.add(simulationRenderer);
 
-        simulationRenderer.tick();
+        //while(window.isShowing()){
+            simulation.tick();
+            simulationRenderer.tick();
+        //}
+        for(int i=0; i<100; i++) {
+            simulation.tick();
+            simulationRenderer.tick();
+        }
 
 
 

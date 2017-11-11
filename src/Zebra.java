@@ -9,4 +9,8 @@ public class Zebra extends Entity{
         return null;
     }
 
+    public void dance(double vigour){
+
+    }
+
 }

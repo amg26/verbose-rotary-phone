@@ -7,17 +7,21 @@ public class Simulation {
     public Simulation() {
         map = new Map(100, 100);
         entities = new ArrayList<>();
+
+        //TEMPORARY
         for(int i=0; i<10; i++){
             for(int j=0; j<10; j++){
                 Position pos = new Position(i*20, j*20);
-                entities.add(new Zebra(pos, 5, true));
+                entities.add(new Todd(pos, 5));
             }
         }
     }
 
     public void tick() {
+
         for(Entity e : entities) {
-            // e.tick(entitiesWithinRadius(e, e.getSightRadius()));
+            //e.tick(entitiesWithinRadius(e, e.getSightRadius()));
+            e.tick();
         }
     }
 

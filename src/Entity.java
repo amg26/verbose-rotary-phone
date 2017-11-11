@@ -90,12 +90,18 @@ public class Entity {
     public void planMove(ArrayList<Entity> closeentities){
 
     }
-    public void move(){
+
+    public void movePolar(double r, double theta){
+        pos.addX(r*Math.cos(theta));
+        pos.addY(r*Math.sin(theta));
+    }
+    public void moveToward(Position target){
 
     }
-    public void move(Position target){
+    public void moveTo(Position target) {
 
     }
+
     //replace void with ArrayList<Entity> vv
     public ArrayList<Entity> scan(int sightradius){
         entitiesWithinRadius(sightradius);
