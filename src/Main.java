@@ -5,5 +5,7 @@ public  class Main {
 
         Position p = new Position(7.3, 8.2);
         System.out.println(m.getElevation(p));
+
+        System.out.println(m);
     }
 }

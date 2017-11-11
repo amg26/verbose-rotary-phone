@@ -21,6 +21,20 @@ public class Map {
 
     }
 
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        for(int i = 0; i < map.length; i++) {
+            for(int j = 0; j < map[0].length; j++) {
+                str.append(map[i][j] + " ");
+            }
+
+            str.append("\n");
+        }
+
+        return str.toString();
+    }
+
     public double[][] randomMap(int width, int height) {
         double randmap[][] = new double[width][height];
         Random rand = new Random();
