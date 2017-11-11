@@ -8,9 +8,7 @@ public  class Main {
 
         Position p = new Position(7.3, 8.2);
         System.out.println(m.getElevation(p));
-        Zebra z1 = new Zebra(p, 5, false);
 
-        System.out.println(m);
 
         JFrame window = new JFrame("SIMULATION");
 

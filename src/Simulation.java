@@ -7,6 +7,12 @@ public class Simulation {
     public Simulation() {
         map = new Map(100, 100);
         entities = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            for(int j=0; j<10; j++){
+                Position pos = new Position(i*20, j*20);
+                entities.add(new Zebra(pos, 5, true));
+            }
+        }
     }
 
     public void tick() {
