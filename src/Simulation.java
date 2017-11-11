@@ -9,9 +9,9 @@ public class Simulation {
         entities = new ArrayList<>();
     }
 
-    public void nextTick() {
+    public void tick() {
         for(Entity e : entities) {
-            //e.move();
+            //e.tick();
         }
     }
 
