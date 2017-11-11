@@ -17,7 +17,7 @@ public  class Main {
 
         window.setSize(600, 600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setVisible(true);
+
 
         Simulation simulation = new Simulation();
 
@@ -31,5 +31,7 @@ public  class Main {
         btn.setActionCommand("nextTick");
         controls.add(btn);
         window.add(controls);
+
+        window.setVisible(true);
     }
 }

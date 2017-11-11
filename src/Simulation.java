@@ -1,3 +1,5 @@
+import javafx.geometry.Pos;
+
 import java.util.ArrayList;
 
 public class Simulation {
@@ -11,9 +13,13 @@ public class Simulation {
         //TEMPORARY
         for(int i=0; i<10; i++){
             for(int j=0; j<10; j++){
-                Position pos = new Position(i*20, j*20);
+                Position pos = new Position(i*20+50, j*20+50);
                 entities.add(new Todd(pos, 5));
             }
+        }
+        for(int i=0; i<5; i++){
+            Position pos = new Position(i*30, i*30);
+            entities.add(new Zebra(pos, 10, false));
         }
     }
 
