@@ -42,13 +42,16 @@ public class Map {
         for(int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++) {
                 //nextDouble gives a val between 0 and 1
-                randmap[i][j] = rand.nextDouble()*10;
+                randmap[i][j] = rand.nextDouble()*255;
             }
         }
 
         return randmap;
     }
 
+    public double[][] getMap() {
+        return map;
+    }
     public double[][] testMap(){
         return new double[][]{
             {0,1,0,0,0,0,0,0,0,0},

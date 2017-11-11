@@ -3,7 +3,7 @@ import java.awt.*;
 
 public  class Main {
     public static void main(String[] args){
-        Map m = new Map(50, 100);
+        Map m = new Map(100, 100);
         System.out.println(m.getElevation(3.5, 2.5));
 
         Position p = new Position(7.3, 8.2);
@@ -13,6 +13,9 @@ public  class Main {
         System.out.println(m);
 
         JFrame window = new JFrame("SIMULATION");
+
+        window.setSize(500, 500);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
 
         Simulation simulation = new Simulation();
@@ -20,6 +23,7 @@ public  class Main {
         SimulationRenderer simulationRenderer = new SimulationRenderer(simulation);
         window.add(simulationRenderer);
 
+        simulationRenderer.tick();
 
 
 

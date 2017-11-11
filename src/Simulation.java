@@ -22,4 +22,8 @@ public class Simulation {
     public ArrayList<Entity> getEntities() {
         return entities;
     }
+
+    public Map getMap() {
+        return map;
+    }
 }
