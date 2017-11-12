@@ -75,6 +75,7 @@ public class Entity {
                     }
                 }
             }
+
         }
         if( danger.size() != 0 ){
             /**
@@ -95,7 +96,6 @@ public class Entity {
             moveTo(escape);
             return;
         }
-
     }
     public void consume(){
 
@@ -116,6 +116,11 @@ public class Entity {
     //replace void with ArrayList<Entity> vv
     public ArrayList<Entity> scan(int sightradius){
         entitiesWithinRadius(sightradius);
+        return null;
+
+    }
+    public ArrayList<Entity> entitiesWithinRadius(int test){
+        return null;
     }
     public int getRank(){
         return rank;
@@ -128,5 +133,11 @@ public class Entity {
     }
     public int getSightRadius(){
         return sightradius;
+    }
+    public double getX(){
+        return getPosition().getX();
+    }
+    public double getY(){
+        return getPosition().getY();
     }
 }

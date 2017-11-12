@@ -4,7 +4,7 @@ public class Food extends Entity {
 
     //make a constructor for food
     public Food (Position pos, double size, int rank) {
-        super(pos,0, false, 0 );
+//        super(pos,0, false, 0 );
         this.size = size;
         this.rank = rank;
     }
