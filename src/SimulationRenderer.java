@@ -23,7 +23,7 @@ public class SimulationRenderer extends JPanel implements ActionListener {
 
         t = new Timer(100, this);
         t.setActionCommand("nextTick");
-        t.start();
+
     }
 
     public void tick(){

@@ -1,8 +1,12 @@
+import javafx.geometry.Pos;
+import sun.font.CompositeStrike;
+
 import java.util.Random;
 
 public class Map {
     public static final double WATER_DEPTH = 80.0;
     private double[][] map;
+    private int mapScale = 5;
 
     public Map(int width, int height) {
 
@@ -14,12 +18,31 @@ public class Map {
 
     public double getElevation(double x, double y) {
         // TODO: fix.
-        return map[(int)Math.round(y)][(int)Math.round(x)];
+        if((x<1 || x>map.length-1) || (y<1 || y>map[0].length-1)) {
+            return 0;
+        }else{
+            return map[(int) Math.round(y)][(int) Math.round(x)];
+        }
 
     }
 
     public double getElevation(Position pos) {
         return getElevation(pos.getY(), pos.getX());
+    }
+
+    //NS and EW are -1, 0 or 1
+    public double getElevation(Position pos, int NS, int EW){
+        return map[(int)Math.round(pos.getY())+NS][(int)Math.round(pos.getX())+EW];
+    }
+
+    public double slope(Position currentPos, int NS, int EW){
+        Position nextPos = new Position(currentPos.getX()+EW, currentPos.getY()+NS);
+        if((nextPos.getX()*5<10 || nextPos.getX()>map.length-10) || (nextPos.getY()<10 || nextPos.getY()>map[0].length-10)) {
+            return -3.14159;
+        }else{
+            return (getElevation(nextPos) - getElevation(currentPos)) / currentPos.distanceTo(nextPos);
+        }
+
     }
 
     public void procedurallyGenerate() {
@@ -71,6 +94,8 @@ public class Map {
             {0,0,0,0,0,0,0,0,0,0}
         };
     }
+
+
 
     public static double[][] generatePerlinNoise(int width, int height){
         double[][] perlinNoise = new double[width][height];

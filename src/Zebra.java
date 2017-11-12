@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Zebra extends Entity{
-    public Zebra(Position pos, int maxspeed, boolean gender){
-        super(pos, maxspeed, gender, 10, 3, 100, 100000, 100000, maxspeed);
+    public Zebra(Map map, Position pos, int maxspeed, boolean gender){
+        super(map, pos, maxspeed, gender, 10, 3, 100, 100000, 100000, maxspeed);
     }
     public ArrayList<Entity> see(int sightradius){
         // entitiesWithinRadius(sightradius);

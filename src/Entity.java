@@ -17,16 +17,21 @@ public class Entity {
     protected int maxspeed;
     protected Random rand;
     protected double direction;
+    protected Map map;
+    protected double alteredSpeed;
+    private final double piOver8 = Math.PI/8;
+
     public Entity(){
 
     }
-    public Entity(Position pos, int maxspeed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
+    public Entity(Map map, Position pos, int maxspeed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
         this.pos = pos;
         this.maxspeed = maxspeed;
         this.gender = gender;
         this.sightradius = sightradius;
         this.rank = rank;
         this.speed = speed;
+        this.map = map;
         rand = new Random();
         direction = 2*Math.PI*rand.nextDouble();
     }
@@ -94,7 +99,6 @@ public class Entity {
              * runs from closest threat for now, kind of stupid
              * TODO: calculate best escape route, stop to consume if not at maxspeed
              */
-            System.out.println("1");
             double min = sightradius;
             Position locClosestThreat = danger.get(0).getPosition();
             for(int i = 0; i < danger.size(); i ++){
@@ -103,14 +107,14 @@ public class Entity {
                     min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
-            System.out.println(locClosestThreat);
+            //System.out.println(locClosestThreat);
             double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
         }
         else if (thirst >= hunger && food.size() != 0) {
-            System.out.println("2");
+            //System.out.println("2");
             double min = sightradius;
             Position locClosestFood = null;
             for(int i = 0; i < food.size(); i ++){
@@ -122,7 +126,7 @@ public class Entity {
             moveTo(locClosestFood);
         }
         else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
-            System.out.println("3");
+            //System.out.println("3");
             double min = sightradius;
             Position locClosestFriend = null;
             for(int i = 0; i < kin.size(); i ++){
@@ -134,7 +138,7 @@ public class Entity {
             this.moveTo(locClosestFriend);
         }
         else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
-            System.out.println("4");
+            //System.out.println("4");
             randomForwardWalk();
         }
         danger.clear();
@@ -181,10 +185,39 @@ public class Entity {
     }
 
     public void movePolar(double r, double theta){
+        Position initialPos = new Position(pos);
 
-        pos.addX(r*Math.cos(theta));
-        pos.addY(r*Math.sin(theta));
+        //NE CCW to E
+        if(theta>piOver8 && theta < 3*piOver8)
+            alteredSpeed = map.slope(initialPos, 1, 1);
+        else if(theta>3*piOver8 && theta < 5*piOver8)
+            alteredSpeed = map.slope(initialPos, 1, 0);
+        else if(theta>5*piOver8 && theta < 7*piOver8)
+            alteredSpeed = map.slope(initialPos, 1, -1);
+        else if(theta>7*piOver8 && theta < 9*piOver8)
+            alteredSpeed = map.slope(initialPos, 0, -1);
+        else if(theta>9*piOver8 && theta < 11*piOver8)
+            alteredSpeed = map.slope(initialPos, -1, -1);
+        else if(theta>11*piOver8 && theta < 13*piOver8)
+            alteredSpeed = map.slope(initialPos, -1, 0);
+        else if(theta>13*piOver8 && theta < 15*piOver8)
+            alteredSpeed = map.slope(initialPos, -1, 1);
+        else
+            alteredSpeed = map.slope(initialPos, 0, 1);
+
+        if(alteredSpeed == -3.14159){
+            return;
+        }
+
+        System.out.println(alteredSpeed  + ",<altered, "+speed*alteredSpeed*r*Math.cos(theta));
+        pos.addX((speed)-speed*(alteredSpeed/10)*r*Math.cos(theta));
+        pos.addY((speed)-speed*(alteredSpeed/10)*r*Math.sin(theta));
+        //altered by terrain
+
     }
+
+
+
     public void move(Position target){
 
     }
@@ -202,7 +235,7 @@ public class Entity {
     }
     public void randomForwardWalk(){
 
-        movePolar(speed*rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
+        movePolar(rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
     }
     public int getRank(){
         return rank;
