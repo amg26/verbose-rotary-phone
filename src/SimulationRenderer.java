@@ -19,7 +19,7 @@ public class SimulationRenderer extends JPanel implements ActionListener {
 
         this.setPreferredSize(new Dimension(500, 500));
 
-        t = new Timer(5, this);
+        t = new Timer(100, this);
         t.setActionCommand("nextTick");
         t.start();
     }
