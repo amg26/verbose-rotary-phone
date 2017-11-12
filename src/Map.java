@@ -14,12 +14,17 @@ public class Map {
 
     public double getElevation(double x, double y) {
         // TODO: fix.
-        return map[(int)Math.round(y)][(int)Math.round(x)];
+        System.out.println(x + " " + Math.round(x));
+        return map[(int) Math.round(y)][(int) Math.round(x)];
 
     }
 
+    public boolean isUnderwater(Position pos) {
+        return getElevation(pos) <= WATER_DEPTH;
+    }
+
     public double getElevation(Position pos) {
-        return getElevation(pos.getY(), pos.getX());
+        return getElevation(pos.getX(), pos.getY());
     }
 
     public void procedurallyGenerate() {

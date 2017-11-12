@@ -10,13 +10,16 @@ public class Simulation {
         map = new Map(1000, 1000);
         entities = new ArrayList<>();
 
-        //TEMPORARY
-        for(int i=0; i<10; i++){
-            for(int j=0; j<10; j++){
-                Position pos = new Position(i*20+50, j*20+50);
+        for(int i = 0; i < 10000; i++) {
+            Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
+            if(!map.isUnderwater(pos)) {
+                System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);
                 entities.add(new Todd(pos, 5));
+            } else {
+                i--;
             }
         }
+
         for(int i=0; i<5; i++){
             Position pos = new Position(i*30, i*30);
             entities.add(new Zebra(pos, 10, false));
@@ -26,7 +29,7 @@ public class Simulation {
     public void tick() {
 
         for(Entity e : entities) {
-            e.tick(entitiesWithinRadius(e,));
+            e.tick(entitiesWithinRadius(e));
             //e.tick(entities);
         }
     }
