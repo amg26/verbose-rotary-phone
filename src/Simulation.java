@@ -26,7 +26,7 @@ public class Simulation {
     public void tick() {
 
         for(Entity e : entities) {
-            e.tick(entitiesWithinRadius(e,));
+            e.tick(entitiesWithinRadius(e));
             //e.tick(entities);
         }
     }
