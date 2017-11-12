@@ -5,7 +5,7 @@ public abstract class AbstractEntity {
 
     }
 
-    public void tick(ArrayList<AbstractEntity> nearby) {
+    public void tick(ArrayList<Entity> nearby) {
 
     }
 }

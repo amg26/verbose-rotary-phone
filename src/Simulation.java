@@ -39,10 +39,7 @@ public class Simulation {
             if( e.pregnant){
                 Position baby = new Position(e.getPosition().getX(), e.getPosition().getY());
                 if(e.getClass() == Zebra.class){
-                    Zebra babyzebra = new Zebra(baby, e.maxspeed, rand.nextBoolean());
-                }
-                else{
-                    return;
+                    Zebra babyzebra = new Zebra(map, baby, e.maxspeed, rand.nextBoolean());
                 }
             }
         }
@@ -62,6 +59,14 @@ public class Simulation {
 
     public ArrayList<Entity> getEntities() {
         return entities;
+    }
+
+    public void addEntities(ArrayList<Entity> ents) {
+        entities.addAll(ents);
+    }
+
+    public void setEntities(ArrayList<Entity> ents) {
+        this.entities = ents;
     }
 
     public Map getMap() {

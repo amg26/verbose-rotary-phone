@@ -90,7 +90,7 @@ public class Entity {
                 this.reproduce(mate);
                 this.reproductionCooldown ++;
                 mate.reproductionCooldown++;
-                System.out.println(";)")
+                System.out.println(";)");
                 //return;
             }
             if (min > 1){

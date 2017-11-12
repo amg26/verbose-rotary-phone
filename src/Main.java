@@ -23,9 +23,9 @@ public  class Main {
 
 
 
-        Simulation simulation = new Simulation();
+        EvolutionManager evMan = new EvolutionManager(20);
 
-        SimulationRenderer simulationRenderer = new SimulationRenderer(simulation);
+        SimulationRenderer simulationRenderer = new SimulationRenderer(evMan.getSim());
         // window.add(simulationRenderer);
         JScrollPane scrollPane = new JScrollPane(simulationRenderer);
         window.add(scrollPane);
