@@ -7,10 +7,10 @@ public class Simulation {
     private ArrayList<Entity> entities;
 
     public Simulation() {
-        map = new Map(1000, 1000);
+        map = new Map(300, 300);
         entities = new ArrayList<>();
 
-        for(int i = 0; i < 10000; i++) {
+        for(int i = 0; i < 100; i++) {
             Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
             if(!map.isUnderwater(pos)) {
                 System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);

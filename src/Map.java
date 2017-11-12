@@ -10,6 +10,7 @@ public class Map {
         //map = randomMap(width, height);
 
         map = generatePerlinNoise(width, height);
+        buildThatWall();
 
     }
 
@@ -38,7 +39,7 @@ public class Map {
 
     public double slope(Position currentPos, int NS, int EW){
         Position nextPos = new Position(currentPos.getX()+EW, currentPos.getY()+NS);
-        if((nextPos.getX()*5<10 || nextPos.getX()>map.length-10) || (nextPos.getY()<10 || nextPos.getY()>map[0].length-10)) {
+        if((nextPos.getX()<1 || nextPos.getX()>map.length*5-1) || (nextPos.getY()<1 || nextPos.getY()>map[0].length*5-1)) {
             return -3.14159;
         }else{
             return (getElevation(nextPos) - getElevation(currentPos)) / currentPos.distanceTo(nextPos);
@@ -96,7 +97,14 @@ public class Map {
         };
     }
 
-
+    public void buildThatWall(){
+        for(int i=0; i<map.length; i++){
+            map[i][0] = 255;
+            map[i][map.length-1] = 255;
+            map[0][i] = 255;
+            map[map.length-1][i] = 255;
+        }
+    }
 
     public static double[][] generatePerlinNoise(int width, int height){
         double[][] perlinNoise = new double[width][height];

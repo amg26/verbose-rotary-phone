@@ -108,14 +108,14 @@ public class Entity {
                     min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
-            System.out.println(locClosestThreat);
+            //System.out.println(locClosestThreat);
             double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
         }
         else if (thirst >= hunger && food.size() != 0) {
-            System.out.println("2");
+            //System.out.println("2");
             double min = sightradius;
             Position locClosestFood = null;
             for(int i = 0; i < food.size(); i ++){
@@ -127,7 +127,7 @@ public class Entity {
             moveTo(locClosestFood);
         }
         else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
-            System.out.println("3");
+            //System.out.println("3");
             double min = sightradius;
             Position locClosestFriend = null;
             for(int i = 0; i < kin.size(); i ++){
@@ -139,7 +139,7 @@ public class Entity {
             this.moveTo(locClosestFriend);
         }
         else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
-            System.out.println("4");
+            //System.out.println("4");
             randomForwardWalk();
         }
         danger.clear();
@@ -206,13 +206,17 @@ public class Entity {
         else
             alteredSpeed = map.slope(initialPos, 0, 1);
 
+        //System.out.println(alteredSpeed  + ",<altered, "+speed*(alteredSpeed/1000)*r*Math.cos(theta) +" Direction:"+direction);
         if(alteredSpeed == -3.14159){
             return;
         }
 
-        System.out.println(alteredSpeed  + ",<altered, "+speed*alteredSpeed*r*Math.cos(theta));
-        pos.addX((speed)-speed*(alteredSpeed/10)*r*Math.cos(theta));
-        pos.addY((speed)-speed*(alteredSpeed/10)*r*Math.sin(theta));
+
+        pos.addX(((speed/10)-speed*(alteredSpeed/100))*r*Math.cos(theta));
+        pos.addY(((speed/10)-speed*(alteredSpeed/100))*r*Math.sin(theta));
+        //pos.addX(speed);
+        //pos.addY(speed);
+
         //altered by terrain
 
     }
@@ -224,6 +228,11 @@ public class Entity {
         double tempy = target.getY() - pos.getY();
         movePolar(speed, Math.atan2(tempy, tempx));
         direction = Math.atan2(tempy,tempx);
+        if(direction<0){
+            direction+=(2*Math.PI);
+        }else if(direction > Math.PI){
+            direction-=(2*Math.PI);
+        }
 
     }
     //replace void with ArrayList<Entity> vv
