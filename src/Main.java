@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public  class Main {
     public static void main(String[] args){
-        Map m = new Map(100, 100);
+        Map m = new Map(1000, 1000);
         System.out.println(m.getElevation(3.5, 2.5));
 
         Position p = new Position(7.3, 8.2);

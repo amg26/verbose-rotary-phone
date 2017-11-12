@@ -44,8 +44,12 @@ public class SimulationRenderer extends JPanel implements ActionListener {
                 } else if(colorVal < 0) {
                     colorVal = 0;
                 }
-                Color c = new Color(colorVal, colorVal, colorVal);
-                g.setColor(c);
+
+                if(colorVal <= Map.WATER_DEPTH) {
+                    g.setColor(new Color(0, 0, 100 + (int) (100/Map.WATER_DEPTH * colorVal)));
+                } else {
+                    g.setColor(new Color(0, colorVal, 0));
+                }
                 g.fillRect(i * 5, j * 5, 5, 5);
             }
         }

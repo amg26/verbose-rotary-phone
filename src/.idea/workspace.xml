@@ -22,12 +22,27 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Zebra.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Zebra.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Map.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Map.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
-              <folding />
+            <state relative-caret-position="-1059">
+              <caret line="43" column="55" lean-forward="true" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
+              <folding>
+                <element signature="e#455#456#0" expanded="true" />
+                <element signature="e#514#515#0" expanded="true" />
+                <element signature="e#1321#1322#0" expanded="true" />
+                <element signature="e#1347#1348#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -42,12 +57,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Simulation.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Simulation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Simulation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-              <folding />
+            <state relative-caret-position="122">
+              <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+              <folding>
+                <marker date="1510458893361" expanded="false" signature="1217:1228" ph=" { " />
+                <marker date="1510458893361" expanded="false" signature="1244:1250" ph=" }" />
+                <marker date="1510458893361" expanded="false" signature="1275:1286" ph=" { " />
+                <marker date="1510458893361" expanded="false" signature="1297:1303" ph=" }" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -55,7 +75,7 @@
       <file leaf-file-name="SimulationRenderer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SimulationRenderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
+            <state relative-caret-position="-759">
               <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
@@ -65,8 +85,18 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
+            <state relative-caret-position="-234">
               <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Food.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Food.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -75,9 +105,20 @@
       <file leaf-file-name="Entity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Entity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-900">
-              <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="1320">
+              <caret line="92" column="33" lean-forward="false" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+              <folding>
+                <marker date="1510458964695" expanded="false" signature="7642:7652" ph=" { " />
+                <marker date="1510458964695" expanded="false" signature="7664:7670" ph=" }" />
+                <marker date="1510458964695" expanded="false" signature="7820:7830" ph=" { " />
+                <marker date="1510458964695" expanded="false" signature="7842:7848" ph=" }" />
+                <marker date="1510458964695" expanded="false" signature="7882:7892" ph=" { " />
+                <marker date="1510458964695" expanded="false" signature="7903:7909" ph=" }" />
+                <marker date="1510458964695" expanded="false" signature="7940:7950" ph=" { " />
+                <marker date="1510458964695" expanded="false" signature="7964:7970" ph=" }" />
+                <marker date="1510458964695" expanded="false" signature="8003:8013" ph=" { " />
+                <marker date="1510458964695" expanded="false" signature="8032:8038" ph=" }" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -92,8 +133,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Entity.java" />
         <option value="$PROJECT_DIR$/Simulation.java" />
+        <option value="$PROJECT_DIR$/Entity.java" />
       </list>
     </option>
   </component>
@@ -296,26 +337,79 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Main.java">
+    <entry file="file://$PROJECT_DIR$/Position.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+        <state relative-caret-position="0">
+          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+        <state relative-caret-position="-1059">
+          <caret line="43" column="55" lean-forward="true" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
+          <folding>
+            <element signature="e#455#456#0" expanded="true" />
+            <element signature="e#514#515#0" expanded="true" />
+            <element signature="e#1321#1322#0" expanded="true" />
+            <element signature="e#1347#1348#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-234">
+          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Position.java">
+    <entry file="file://$PROJECT_DIR$/Food.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1320">
+          <caret line="92" column="33" lean-forward="false" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+          <folding>
+            <marker date="1510458964695" expanded="false" signature="7642:7652" ph=" { " />
+            <marker date="1510458964695" expanded="false" signature="7664:7670" ph=" }" />
+            <marker date="1510458964695" expanded="false" signature="7820:7830" ph=" { " />
+            <marker date="1510458964695" expanded="false" signature="7842:7848" ph=" }" />
+            <marker date="1510458964695" expanded="false" signature="7882:7892" ph=" { " />
+            <marker date="1510458964695" expanded="false" signature="7903:7909" ph=" }" />
+            <marker date="1510458964695" expanded="false" signature="7940:7950" ph=" { " />
+            <marker date="1510458964695" expanded="false" signature="7964:7970" ph=" }" />
+            <marker date="1510458964695" expanded="false" signature="8003:8013" ph=" { " />
+            <marker date="1510458964695" expanded="false" signature="8032:8038" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Simulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding>
+            <marker date="1510458893361" expanded="false" signature="1217:1228" ph=" { " />
+            <marker date="1510458893361" expanded="false" signature="1244:1250" ph=" }" />
+            <marker date="1510458893361" expanded="false" signature="1275:1286" ph=" { " />
+            <marker date="1510458893361" expanded="false" signature="1297:1303" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimulationRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-759">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -328,26 +422,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimulationRenderer.java">
+    <entry file="file://$PROJECT_DIR$/Zebra.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-900">
-          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Simulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>

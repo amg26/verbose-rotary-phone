@@ -89,7 +89,8 @@ public class Entity {
 
         }
 
-        if (danger.size() != 0) {
+
+        if( danger.size() != 0 ){
             /**
              * runs from closest threat for now, kind of stupid
              * TODO: calculate best escape route, stop to consume if not at maxspeed
@@ -144,6 +145,7 @@ public class Entity {
         //this.hunger = hunger - 5;
         //this.thirst = thirst - 10;
     }
+
     public void consume(Entity consumable) {
         Entity f = consumable;
         Entity w = consumable; //for when there's a river
