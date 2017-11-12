@@ -38,7 +38,6 @@ public class Entity {
             health = 0;
             //this.die(); // pls dye
         }
-
         if (hunger == 0) {
             speed = (int) (0.5 * maxspeed);
             if (health < (int) (0.2 * maxhealth)) {
@@ -91,6 +90,7 @@ public class Entity {
         }
 
         if( danger.size() != 0 ){
+        if (danger.size() != 0) {
             /**
              * runs from closest threat for now, kind of stupid
              * TODO: calculate best escape route, stop to consume if not at maxspeed
@@ -147,6 +147,32 @@ public class Entity {
     }
     public void consume(){
 
+    public void consume(Entity consumable) {
+        Entity f = consumable;
+        Entity w = consumable; //for when there's a river
+        if (this.hunger < 20) {
+            if (this.getRank() > f.getRank()) {
+                if (f instanceof Food) {
+                    this.move(f.getPosition());
+                    f.health--;
+                    this.hunger = this.hunger + 15;
+                /*if (this.health < this.maxhealth){
+                    //can be any number. I just put 10 for now
+                    if (this.getRank() > 10) {
+                        this is also just a random increase rate for health as the animal eats food
+                        this.health = this.health + (int)(this.health* 0.2);
+                    }*/
+                } else if (f instanceof Entity) {
+                    this.move(f.getPosition());
+                    f.health = f.health - 15;
+                    this.hunger = this.hunger + 15;
+                }
+            }
+        }
+        if (this.thirst < 20) {
+            this.move(w.getPosition());
+            this.thirst = this.thirst + 15;
+        }
     }
     public void reproduce(Entity e){
 

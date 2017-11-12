@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class SimulationRenderer extends JPanel implements ActionListener {
         this.simulation = simulation;
 
         map = simulation.getMap().getMap(); // lol
+
         entities = simulation.getEntities();
 
         this.setPreferredSize(new Dimension(500, 500));
@@ -28,6 +30,7 @@ public class SimulationRenderer extends JPanel implements ActionListener {
         simulation.tick();
         repaint();
     }
+
 
     @Override
     public void paintComponent(Graphics g) {

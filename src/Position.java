@@ -15,6 +15,7 @@ public class Position {
         return y;
     }
 
+
     public void setX(double val){
         this.x = val;
     }

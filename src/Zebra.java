@@ -15,5 +15,4 @@ public class Zebra extends Entity{
     public void dance(double vigour){
 
     }
-
 }

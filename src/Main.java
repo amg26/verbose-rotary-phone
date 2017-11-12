@@ -13,10 +13,12 @@ public  class Main {
 
 
         JFrame window = new JFrame("SIMULATION");
+
         window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
         window.setSize(600, 600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 
         Simulation simulation = new Simulation();
 

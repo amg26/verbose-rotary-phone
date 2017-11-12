@@ -31,11 +31,11 @@ public class Simulation {
         }
     }
 
-    public ArrayList<Entity> entitiesWithinRadius(Entity ent) {
+    public ArrayList<Entity> entitiesWithinRadius(Entity ent, double radius) {
         ArrayList<Entity> closeEntities = new ArrayList<>();
 
         for(Entity other : entities) {
-            if(other.getPosition().distanceTo(ent.getPosition()) <= ent.getSightRadius()) {
+            if(other.getPosition().distanceTo(ent.getPosition()) <= radius) {
                 closeEntities.add(other);
             }
         }
