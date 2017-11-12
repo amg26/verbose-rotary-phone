@@ -29,6 +29,7 @@ public class Entity {
         if (hunger == 0 && thirst == 0){
             //sit nerd u ded
             health = 0;
+            this.die(); // pls dye
             return;
         }
         if (hunger == 0) {
@@ -71,7 +72,11 @@ public class Entity {
                         return;
                     }
                     if (min > 1){
-                        //moves towards it
+                        /**
+                         * moves towards it
+                         * TODO: Fix according to how Phil does moveTo
+                         */
+                        moveTo(locclosestmate);
                     }
                 }
             }
@@ -94,7 +99,28 @@ public class Entity {
             double y = (pos.getY() - locclosestthreat.getY())/(sqrt((locclosestthreat.getX()*locclosestthreat.getX())+(locclosestthreat.getY()*locclosestthreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
-            return;
+        }
+        else if (thirst > hunger && food.size() != 0) {
+            double min = sightradius;
+            Position locclosestfood = null;
+            for(int i = 0; i < food.size(); i ++){
+                if(this.getPosition().distanceTo(food.get(i).getPosition()) < min){
+                    min = this.getPosition().distanceTo(food.get(i).getPosition());
+                    locclosestfood = food.get(i).getPosition();
+                }
+            }
+            moveTo(locclosestfood);
+        }
+        else if (thirst > hunger && food.size()!= 0){
+            double min = sightradius;
+            Position locclosestfriend = null;
+            for(int i = 0; i < kin.size(); i ++){
+                if(kin.get(i).getPosition().distanceTo(this.getPosition()) < min){
+                    min = kin.get(i).getPosition().distanceTo(food.get(i).getPosition());
+                    locclosestfriend = kin.get(i).getPosition();
+                }
+            }
+            this.moveTo(locclosestfriend);
         }
     }
     public void consume(){
@@ -139,5 +165,8 @@ public class Entity {
     }
     public double getY(){
         return getPosition().getY();
+    }
+    public int getHealth(){
+        return health;
     }
 }
