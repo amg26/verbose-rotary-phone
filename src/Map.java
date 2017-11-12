@@ -34,7 +34,11 @@ public class Map {
 
     //NS and EW are -1, 0 or 1
     public double getElevation(Position pos, int NS, int EW){
-        return map[(int)Math.round(pos.getY())+NS][(int)Math.round(pos.getX())+EW];
+        if((pos.getX()<5 || pos.getX()>map.length*5-5) || (pos.getY()<5 || pos.getY()>map[0].length*5-5)) {
+            return -3.14159;
+        }else {
+            return map[(int) Math.round(pos.getY()) + NS][(int) Math.round(pos.getX()) + EW];
+        }
     }
 
     public double slope(Position currentPos, int NS, int EW){
@@ -99,10 +103,18 @@ public class Map {
 
     public void buildThatWall(){
         for(int i=0; i<map.length; i++){
-            map[i][0] = 255;
-            map[i][map.length-1] = 255;
-            map[0][i] = 255;
-            map[map.length-1][i] = 255;
+            map[i][0] = 0;
+            map[i][map.length-1] = 0;
+            map[0][i] = 0;
+            map[map.length-1][i] = 0;
+            map[i][1] = 0;
+            map[i][map.length-2] = 0;
+            map[1][i] = 0;
+            map[map.length-2][i] = 0;
+            map[i][2] = 0;
+            map[i][map.length-3] = 0;
+            map[2][i] = 0;
+            map[map.length-3][i] = 0;
         }
     }
 

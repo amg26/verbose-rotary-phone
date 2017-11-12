@@ -43,6 +43,16 @@ public  class Main {
         playBtn.setActionCommand("playPause");
         controls.add(playBtn);
 
+        /*String[] animalNames = new String[] {"Zebra", "Lion",
+                "Giraffe", "Todd"};
+        JComboBox<String> animalSelectionBox = new JComboBox<>(animalNames);
+        animalSelectionBox.addActionListener(simulationRenderer);
+        animalSelectionBox.setActionCommand("selectionBox");
+        controls.add(animalSelectionBox);
+        */
+
+
+
         window.add(controls);
 
         window.setVisible(true);

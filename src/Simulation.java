@@ -10,25 +10,77 @@ public class Simulation {
     private ArrayList<Food> food;
 
     public Simulation() {
-        map = new Map(300, 300);
+        map = new Map(1000, 1000);
         entities = new ArrayList<>();
         rand = new Random();
         food = new ArrayList<Food>();
         for(int i = 0; i < 100; i++) {
             Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
-            System.out.println(pos);
+            //System.out.println(pos);
             if(!map.isUnderwater(pos)) {
-                System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);
-                Food pieceOfFood = new Food(map ,pos, 5, 0 );
-                entities.add(pieceOfFood);
+                //System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);
+                //Food pieceOfFood = new Food(map ,pos, 5, 0 );
+                //entities.add(pieceOfFood);
+                //food.add(pieceOfFood);
+                Lion lion = new Lion(map, pos, 1, rand.nextBoolean());
+                entities.add(lion);
             } else {
                 i--;
             }
         }
-
+        for(int i = 0; i < 1000; i++) {
+            Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
+            //System.out.println(pos);
+            if(!map.isUnderwater(pos)) {
+                //System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);
+                //Food pieceOfFood = new Food(map ,pos, 5, 0 );
+                //entities.add(pieceOfFood);
+                //food.add(pieceOfFood);
+                Zebra zebra = new Zebra(map, pos, 3.3, rand.nextBoolean());
+                entities.add(zebra);
+            } else {
+                i--;
+            }
+        }
         for(int i=0; i<5; i++){
-            Position pos = new Position(i*30, i*30);
-            entities.add(new Zebra(map, pos, 10, false));
+            for(int j=0; j<5; j++){
+                Todd todd = new Todd(map, new Position(i*16, j*16), 3);
+                entities.add(todd);
+            }
+        }
+        for(int i=0; i<25; i++){
+            for(int j=0; j<10; j++){
+                Giraffe giraffe = new Giraffe(map, new Position(i*14+50, j*14+50), 2.5, rand.nextBoolean());
+                entities.add(giraffe);
+            }
+        }
+
+        /*
+        for(int i=0; i<2; i++){
+            Position pos = new Position(i*30+100, i*30+100);
+            entities.add(new Zebra(map, pos, 5, false));
+        }
+        */
+    }
+
+    public void generateAnimal(int type, Position pos){
+        //entities.add(new Giraffe(map, pos, 2, rand.nextBoolean()));
+        switch(type){
+            case 0:
+                entities.add(new Zebra(map, pos,2, rand.nextBoolean()));
+                break;
+            case 1:
+                entities.add(new Lion(map, pos, 2, rand.nextBoolean()));
+                break;
+            case 2:
+                entities.add(new Giraffe(map, pos, 2, rand.nextBoolean()));
+                break;
+            case 3:
+                entities.add(new Todd(map, pos, 2));
+                break;
+            default:
+                entities.add(new Zebra(map, pos, 2, rand.nextBoolean()));
+
         }
     }
 
@@ -48,13 +100,15 @@ public class Simulation {
             }
         }
 
-        for (int i = 0; i < food.size(); i ++){
-            if (food.get(i).getSize() == 0){
-                food.remove(food.get(i));
+        for (int i = food.size()-1; i > 0; i --){
+            if (food.get(i).getSize() <= 1){
+                food.remove(i);
+                entities.remove(food.get(i));
             }
         }
-        for (int i = 0; i < entities.size(); i ++){
-            if( entities.get(i).health == 0){
+        for (int i = entities.size()-1; i > 0; i --){
+            //System.out.println(entities.get(i).health);
+            if( entities.get(i).health <= 0){
                 entities.remove(i);
             }
         }
