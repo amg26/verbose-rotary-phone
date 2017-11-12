@@ -97,13 +97,14 @@ public class Entity {
              */
             System.out.println("1");
             double min = sightradius;
-            Position locClosestThreat = null;
+            Position locClosestThreat = danger.get(0).getPosition();
             for(int i = 0; i < danger.size(); i ++){
                 if ((sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())))< min){
                     locClosestThreat = danger.get(i).getPosition();
                     min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
+            System.out.println(locClosestThreat);
             double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
@@ -136,7 +137,6 @@ public class Entity {
         else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
             System.out.println("4");
             randomForwardWalk();
-            System.out.println("ah");
         }
         danger.clear();
         kin.clear();
