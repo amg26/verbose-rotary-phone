@@ -8,6 +8,8 @@ public class SimulationRenderer extends JPanel implements ActionListener {
     private Simulation simulation;
     private double[][] map;
     private ArrayList<Entity> entities;
+    //TIMING
+    Timer t;
 
     public SimulationRenderer(Simulation simulation){
         this.simulation = simulation;
@@ -16,6 +18,9 @@ public class SimulationRenderer extends JPanel implements ActionListener {
         entities = simulation.getEntities();
 
         this.setPreferredSize(new Dimension(500, 500));
+
+        t = new Timer(50, this);
+        t.start();
     }
 
     public void tick(){
@@ -31,18 +36,25 @@ public class SimulationRenderer extends JPanel implements ActionListener {
         for(int j = 0; j < map.length; j++) {
             for(int i = 0; i < map[0].length; i++) {
                 int colorVal = (int) map[j][i];
-                if(colorVal > 254) {
-                    colorVal = 254;
+                if(colorVal > 255) {
+                    colorVal = 255;
                 } else if(colorVal < 0) {
-                    colorVal = 1;
+                    colorVal = 0;
                 }
-                Color c = new Color((int) map[j][i], (int) map[j][i], (int) map[j][i]);
+                Color c = new Color(colorVal, colorVal, colorVal);
                 g.setColor(c);
                 g.fillRect(i * 5, j * 5, 5, 5);
             }
         }
-        g.setColor(Color.CYAN);
+
         for(Entity e : entities){
+            if(e.getClass() == Zebra.class){
+                g.setColor(Color.MAGENTA);
+            }else if(e.getClass() == Todd.class){
+                g.setColor(Color.CYAN);
+            }else{
+                g.setColor(Color.RED);
+            }
             g.fillOval((int)e.getX(), (int)e.getY(), 10, 10);
 
         }
@@ -50,8 +62,11 @@ public class SimulationRenderer extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("nextTick")) {
-            tick();
-        }
+        //if(e.getActionCommand().equals("nextTick")) {
+        //    tick();
+        //}
+        //System.out.println(e);
+        tick();
+
     }
 }
