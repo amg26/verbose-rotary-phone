@@ -5,6 +5,7 @@ import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
 
 public class Entity {
+    protected int reproductionCooldown;
     protected Position pos;
     protected int speed;
     protected int thirst;
@@ -17,18 +18,26 @@ public class Entity {
     protected int maxspeed;
     protected Random rand;
     protected double direction;
+    protected boolean pregnant;
+    protected Map map;
+    protected double alteredSpeed;
+    private final double piOver8 = Math.PI/8;
+
     public Entity(){
 
     }
-    public Entity(Position pos, int maxspeed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
+    public Entity(Map map, Position pos, int maxspeed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
         this.pos = pos;
         this.maxspeed = maxspeed;
         this.gender = gender;
         this.sightradius = sightradius;
         this.rank = rank;
         this.speed = speed;
+        this.map = map;
         rand = new Random();
         direction = 2*Math.PI*rand.nextDouble();
+        reproductionCooldown = 0;
+        pregnant = false;
     }
     //based on needs + want to reproduce + not die
     public void tick(ArrayList<Entity> closeEntities) {
@@ -68,23 +77,28 @@ public class Entity {
         }
         if(hunger > 70 && thirst > 70 && danger.size() == 0 && kin.size() != 0){
             double min = sightradius;
-            Position locClosestMate;
+            Position locClosestMate = kin.get(0).getPosition();
+            Entity mate = kin.get(0);
             for(int i = 0; i < kin.size(); i ++){
                 if ((sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())))< min && this.gender != kin.get(i).getGender()){
                     locClosestMate = kin.get(i).getPosition();
                     min = (sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())));
-                    if (min < 1){
-                        this.reproduce(kin.get(i));
-                        //return;
-                    }
-                    if (min > 1){
-                        /**
-                         * moves towards it
-                         * TODO: Fix according to how Phil does moveTo
-                         */
-                        moveTo(locClosestMate);
-                    }
+                    mate = kin.get(i);
                 }
+            }
+            if (min < 1 && this.reproductionCooldown%20 == 0){
+                this.reproduce(mate);
+                this.reproductionCooldown ++;
+                mate.reproductionCooldown++;
+                System.out.println(";)")
+                //return;
+            }
+            if (min > 1){
+                /**
+                 * moves towards it
+                 * TODO: Fix according to how Phil does moveTo
+                 */
+                moveTo(locClosestMate);
             }
 
         }
@@ -103,23 +117,29 @@ public class Entity {
                     min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
+            //System.out.println(locClosestThreat);
             double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
         }
         else if (thirst >= hunger && food.size() != 0) {
+            //System.out.println("2");
             double min = sightradius;
             Position locClosestFood = null;
+            Entity closestFood = new Entity ();
             for(int i = 0; i < food.size(); i ++){
                 if(this.getPosition().distanceTo(food.get(i).getPosition()) < min){
                     min = this.getPosition().distanceTo(food.get(i).getPosition());
                     locClosestFood = food.get(i).getPosition();
+                    closestFood = food.get(i);
                 }
             }
             moveTo(locClosestFood);
+            consume(closestFood);
         }
         else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
+            //System.out.println("3");
             double min = sightradius;
             Position locClosestFriend = null;
             for(int i = 0; i < kin.size(); i ++){
@@ -131,6 +151,7 @@ public class Entity {
             this.moveTo(locClosestFriend);
         }
         else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
+            //System.out.println("4");
             randomForwardWalk();
         }
         danger.clear();
@@ -169,7 +190,9 @@ public class Entity {
         }
     }
     public void reproduce(Entity e){
-
+        if (e.gender){
+            e.pregnant = true;
+        }
     }
     //should return position vv
     public void planMove(ArrayList<Entity> closeentities){
@@ -177,9 +200,39 @@ public class Entity {
     }
 
     public void movePolar(double r, double theta){
+        Position initialPos = new Position(pos);
 
-        pos.addX(r*Math.cos(theta));
-        pos.addY(r*Math.sin(theta));
+        //NE CCW to E
+        if(theta>piOver8 && theta < 3*piOver8)
+            alteredSpeed = map.slope(initialPos, 1, 1);
+        else if(theta>3*piOver8 && theta < 5*piOver8)
+            alteredSpeed = map.slope(initialPos, 1, 0);
+        else if(theta>5*piOver8 && theta < 7*piOver8)
+            alteredSpeed = map.slope(initialPos, 1, -1);
+        else if(theta>7*piOver8 && theta < 9*piOver8)
+            alteredSpeed = map.slope(initialPos, 0, -1);
+        else if(theta>9*piOver8 && theta < 11*piOver8)
+            alteredSpeed = map.slope(initialPos, -1, -1);
+        else if(theta>11*piOver8 && theta < 13*piOver8)
+            alteredSpeed = map.slope(initialPos, -1, 0);
+        else if(theta>13*piOver8 && theta < 15*piOver8)
+            alteredSpeed = map.slope(initialPos, -1, 1);
+        else
+            alteredSpeed = map.slope(initialPos, 0, 1);
+
+        //System.out.println(alteredSpeed  + ",<altered, "+speed*(alteredSpeed/1000)*r*Math.cos(theta) +" Direction:"+direction);
+        if(alteredSpeed == -3.14159){
+            return;
+        }
+
+
+        pos.addX(((speed/10)-speed*(alteredSpeed/100))*r*Math.cos(theta));
+        pos.addY(((speed/10)-speed*(alteredSpeed/100))*r*Math.sin(theta));
+        //pos.addX(speed);
+        //pos.addY(speed);
+
+        //altered by terrain
+
     }
     public void move(Position target){
 
@@ -189,6 +242,11 @@ public class Entity {
         double tempy = target.getY() - pos.getY();
         movePolar(speed, Math.atan2(tempy, tempx));
         direction = Math.atan2(tempy,tempx);
+        if(direction<0){
+            direction+=(2*Math.PI);
+        }else if(direction > Math.PI){
+            direction-=(2*Math.PI);
+        }
 
     }
     //replace void with ArrayList<Entity> vv
@@ -203,7 +261,7 @@ public class Entity {
     }
     public void randomForwardWalk(){
 
-        movePolar(speed*rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
+        movePolar(rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
     }
 
     public int getRank(){
