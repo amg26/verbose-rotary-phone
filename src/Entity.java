@@ -89,6 +89,7 @@ public class Entity {
 
         }
 
+
         if( danger.size() != 0 ){
             /**
              * runs from closest threat for now, kind of stupid
@@ -201,6 +202,7 @@ public class Entity {
         return null;
 
     }
+
     public ArrayList<Entity> entitiesWithinRadius(int test){
         return null;
     }
@@ -208,6 +210,7 @@ public class Entity {
 
         movePolar(speed*rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
     }
+
     public int getRank(){
         return rank;
     }
@@ -217,6 +220,7 @@ public class Entity {
     public boolean getGender(){
         return gender;
     }
+
     public int getSightRadius(){
         return sightradius;
     }
