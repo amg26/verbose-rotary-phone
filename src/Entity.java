@@ -133,6 +133,12 @@ public class Entity {
     public void planMove(ArrayList<Entity> closeentities){
 
     }
+
+    public void movePolar(double r, double theta){
+
+        pos.addX(r*Math.cos(theta));
+        pos.addY(r*Math.sin(theta));
+    }
     public void move(Position target){
 
     }
