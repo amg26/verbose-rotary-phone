@@ -6,7 +6,7 @@ public class Food extends Entity {
     public Food (Position pos, double size, int rank) {
 //        super(pos,0, false, 0 );
         this.size = size;
-        this.rank = rank;
+        this.rank = 0;
     }
     //rank the food
     public void getEaten (double size){

@@ -14,8 +14,11 @@ public class Position {
     public double getY() {
         return y;
     }
-
-
+    public double getDirectionTo(Position p){
+        double tempx = p.getX() - getX();
+        double tempy = p.getY() - getY();
+        return Math.atan2(tempy,tempx);
+    }
     public void setX(double val){
         this.x = val;
     }

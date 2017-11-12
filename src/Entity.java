@@ -5,6 +5,7 @@ import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
 
 public class Entity {
+    protected int reproductionCooldown;
     protected Position pos;
     protected int speed;
     protected int thirst;
@@ -17,6 +18,7 @@ public class Entity {
     protected int maxspeed;
     protected Random rand;
     protected double direction;
+    protected boolean pregnant;
     public Entity(){
 
     }
@@ -29,6 +31,8 @@ public class Entity {
         this.speed = speed;
         rand = new Random();
         direction = 2*Math.PI*rand.nextDouble();
+        reproductionCooldown = 0;
+        pregnant = false;
     }
     //based on needs + want to reproduce + not die
     public void tick(ArrayList<Entity> closeEntities) {
@@ -68,23 +72,28 @@ public class Entity {
         }
         if(hunger > 70 && thirst > 70 && danger.size() == 0 && kin.size() != 0){
             double min = sightradius;
-            Position locClosestMate;
+            Position locClosestMate = kin.get(0).getPosition();
+            Entity mate = kin.get(0);
             for(int i = 0; i < kin.size(); i ++){
                 if ((sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())))< min && this.gender != kin.get(i).getGender()){
                     locClosestMate = kin.get(i).getPosition();
                     min = (sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())));
-                    if (min < 1){
-                        this.reproduce(kin.get(i));
-                        //return;
-                    }
-                    if (min > 1){
-                        /**
-                         * moves towards it
-                         * TODO: Fix according to how Phil does moveTo
-                         */
-                        moveTo(locClosestMate);
-                    }
+                    mate = kin.get(i);
                 }
+            }
+            if (min < 1 && this.reproductionCooldown%20 == 0){
+                this.reproduce(mate);
+                this.reproductionCooldown ++;
+                mate.reproductionCooldown++;
+                System.outprintln(";)")
+                //return;
+            }
+            if (min > 1){
+                /**
+                 * moves towards it
+                 * TODO: Fix according to how Phil does moveTo
+                 */
+                moveTo(locClosestMate);
             }
 
         }
@@ -111,13 +120,16 @@ public class Entity {
         else if (thirst >= hunger && food.size() != 0) {
             double min = sightradius;
             Position locClosestFood = null;
+            Entity closestFood = new Entity ();
             for(int i = 0; i < food.size(); i ++){
                 if(this.getPosition().distanceTo(food.get(i).getPosition()) < min){
                     min = this.getPosition().distanceTo(food.get(i).getPosition());
                     locClosestFood = food.get(i).getPosition();
+                    closestFood = food.get(i);
                 }
             }
             moveTo(locClosestFood);
+            consume(closestFood);
         }
         else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
             double min = sightradius;
@@ -169,7 +181,9 @@ public class Entity {
         }
     }
     public void reproduce(Entity e){
-
+        if (e.gender){
+            e.pregnant = true;
+        }
     }
     //should return position vv
     public void planMove(ArrayList<Entity> closeentities){
@@ -228,4 +242,5 @@ public class Entity {
     public int getHealth(){
         return health;
     }
+
 }

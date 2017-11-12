@@ -15,4 +15,7 @@ public class Zebra extends Entity{
     public void dance(double vigour){
 
     }
+    public void reproduce(Entity e){
+
+    }
 }

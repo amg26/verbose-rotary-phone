@@ -1,14 +1,17 @@
 import javafx.geometry.Pos;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Simulation {
     private Map map;
     private ArrayList<Entity> entities;
+    private Random rand;
 
     public Simulation() {
         map = new Map(1000, 1000);
         entities = new ArrayList<>();
+        rand = new Random();
 
         //TEMPORARY
         for(int i=0; i<10; i++){
@@ -28,6 +31,17 @@ public class Simulation {
         for(Entity e : entities) {
             e.tick(entitiesWithinRadius(e));
             //e.tick(entities);
+        }
+        for (Entity e : entities){
+            if( e.pregnant){
+                Position baby = new Position(e.getPosition().getX(), e.getPosition().getY());
+                if(e.getClass() == Zebra.class){
+                    Zebra babyzebra = new Zebra(baby, e.maxspeed, rand.nextBoolean());
+                }
+                else{
+                    return;
+                }
+            }
         }
     }
 
