@@ -3,19 +3,24 @@ import java.util.Random;
 public class Map {
     public static final double WATER_DEPTH = 50.0;
     private double[][] map;
+    private int mapScale = 5;
 
     public Map(int width, int height) {
 
         //map = randomMap(width, height);
 
         map = generatePerlinNoise(width, height);
+        buildThatWall();
 
     }
 
     public double getElevation(double x, double y) {
         // TODO: fix.
-        System.out.println(x + " " + Math.round(x));
-        return map[(int) Math.round(y)][(int) Math.round(x)];
+        if((x<1 || x>map.length-1) || (y<1 || y>map[0].length-1)) {
+            return 0;
+        }else{
+            return map[(int) Math.round(y)][(int) Math.round(x)];
+        }
 
     }
 
@@ -25,6 +30,21 @@ public class Map {
 
     public double getElevation(Position pos) {
         return getElevation(pos.getX(), pos.getY());
+    }
+
+    //NS and EW are -1, 0 or 1
+    public double getElevation(Position pos, int NS, int EW){
+        return map[(int)Math.round(pos.getY())+NS][(int)Math.round(pos.getX())+EW];
+    }
+
+    public double slope(Position currentPos, int NS, int EW){
+        Position nextPos = new Position(currentPos.getX()+EW, currentPos.getY()+NS);
+        if((nextPos.getX()<1 || nextPos.getX()>map.length*5-1) || (nextPos.getY()<1 || nextPos.getY()>map[0].length*5-1)) {
+            return -3.14159;
+        }else{
+            return (getElevation(nextPos) - getElevation(currentPos)) / currentPos.distanceTo(nextPos);
+        }
+
     }
 
     public void procedurallyGenerate() {
@@ -75,6 +95,15 @@ public class Map {
             {0,0,0,0,0,1,1,1,0,0},
             {0,0,0,0,0,0,0,0,0,0}
         };
+    }
+
+    public void buildThatWall(){
+        for(int i=0; i<map.length; i++){
+            map[i][0] = 255;
+            map[i][map.length-1] = 255;
+            map[0][i] = 255;
+            map[map.length-1][i] = 255;
+        }
     }
 
     public static double[][] generatePerlinNoise(int width, int height){

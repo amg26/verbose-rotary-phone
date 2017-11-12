@@ -1,20 +1,23 @@
 import javafx.geometry.Pos;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Simulation {
     private Map map;
     private ArrayList<Entity> entities;
+    private Random rand;
 
     public Simulation() {
-        map = new Map(1000, 1000);
+        map = new Map(300, 300);
         entities = new ArrayList<>();
+        rand = new Random();
 
-        for(int i = 0; i < 10000; i++) {
+        for(int i = 0; i < 100; i++) {
             Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
             if(!map.isUnderwater(pos)) {
                 System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);
-                entities.add(new Todd(pos, 5));
+                entities.add(new Todd(map, pos, 5));
             } else {
                 i--;
             }
@@ -22,7 +25,7 @@ public class Simulation {
 
         for(int i=0; i<5; i++){
             Position pos = new Position(i*30, i*30);
-            entities.add(new Zebra(pos, 10, false));
+            entities.add(new Zebra(map, pos, 10, false));
         }
     }
 
@@ -31,6 +34,17 @@ public class Simulation {
         for(Entity e : entities) {
             e.tick(entitiesWithinRadius(e));
             //e.tick(entities);
+        }
+        for (Entity e : entities){
+            if( e.pregnant){
+                Position baby = new Position(e.getPosition().getX(), e.getPosition().getY());
+                if(e.getClass() == Zebra.class){
+                    Zebra babyzebra = new Zebra(baby, e.maxspeed, rand.nextBoolean());
+                }
+                else{
+                    return;
+                }
+            }
         }
     }
 

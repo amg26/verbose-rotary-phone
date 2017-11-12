@@ -1,3 +1,5 @@
+import javafx.geometry.Pos;
+
 public class Position {
     private double x;
     private double y;
@@ -5,6 +7,10 @@ public class Position {
     public Position(double x, double y) {
         this.x = x;
         this.y  = y;
+    }
+    public Position(Position pos){
+        this.x = pos.getX();
+        this.y = pos.getY();
     }
 
     public double getX() {
@@ -14,8 +20,11 @@ public class Position {
     public double getY() {
         return y;
     }
-
-
+    public double getDirectionTo(Position p){
+        double tempx = p.getX() - getX();
+        double tempy = p.getY() - getY();
+        return Math.atan2(tempy,tempx);
+    }
     public void setX(double val){
         this.x = val;
     }
