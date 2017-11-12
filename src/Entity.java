@@ -12,32 +12,40 @@ public class Entity {
     protected int rank;
     protected int health;
     protected int maxhealth;
-    public Entity(){
+
+    protected int maxspeed;
+
+    public Entity() {
 
     }
-    public Entity(Position pos, int speed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger) {
+
+    public Entity(Position pos, int maxspeed, boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
+
         this.pos = pos;
-        this.speed = speed;
+        this.maxspeed = maxspeed;
         this.gender = gender;
         this.sightradius = sightradius;
         this.rank = rank;
+        this.speed = speed;
     }
+
     //based on needs + want to reproduce + not die
     public void tick() {
-        if (hunger == 0 && thirst == 0){
+        if (hunger == 0 && thirst == 0) {
             //sit nerd u ded
             health = 0;
+            //this.die(); // pls dye
             return;
         }
         if (hunger == 0) {
-            speed = (int) (0.5 * speed);
+            speed = (int) (0.5 * maxspeed);
             if (health < (int) (0.2 * maxhealth)) {
                 health = 0;
             }
             health = (int) (0.8 * health);
         }
         if (thirst == 0) {
-            speed = (int) (0.5 * speed);
+            speed = (int) (0.5 * maxspeed);
             if (health < (int) (0.2 * maxhealth)) {
                 health = 0;
             }
@@ -57,30 +65,69 @@ public class Entity {
                 kin.add(scan(sightradius).get(i));
             }
         }
-        if(hunger > 70 && thirst > 70 && danger.size() == 0){
+        if (hunger > 70 && thirst > 70 && danger.size() == 0) {
             double min = sightradius;
             Position locclosestmate;
-            for(int i = 0; i < kin.size(); i ++){
-                if ((sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())))< min && this.gender != kin.get(i).getGender()){
+            for (int i = 0; i < kin.size(); i++) {
+                if ((sqrt((kin.get(i).pos.getX() * kin.get(i).pos.getX()) + (kin.get(i).pos.getY() * kin.get(i).pos.getY()))) < min && this.gender != kin.get(i).getGender()) {
                     locclosestmate = kin.get(i).getPosition();
-                    min = (sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())));
-                    if (min < 1){
+                    min = (sqrt((kin.get(i).pos.getX() * kin.get(i).pos.getX()) + (kin.get(i).pos.getY() * kin.get(i).pos.getY())));
+                    if (min < 1) {
                         this.reproduce(kin.get(i));
                         return;
                     }
-                    if (min > 1){
-                        //moves towards it
+                    if (min > 1) {
+                        /**
+                         * moves towards it
+                         * TODO: Fix according to how Phil does moveTo
+                         */
+                        moveTo(locclosestmate);
                     }
                 }
             }
 
         }
-        if( danger.size() != 0 ){
-            //runs from closest threat for now, kind of stupid
-
+        if (danger.size() != 0) {
+            /**
+             * runs from closest threat for now, kind of stupid
+             * TODO: calculate best escape route, stop to consume if not at maxspeed
+             */
+            double min = sightradius;
+            Position locclosestthreat = null;
+            for (int i = 0; i < danger.size(); i++) {
+                if ((sqrt((danger.get(i).pos.getX() * danger.get(i).pos.getX()) + (danger.get(i).pos.getY() * danger.get(i).pos.getY()))) < min) {
+                    locclosestthreat = danger.get(i).getPosition();
+                    min = (sqrt((danger.get(i).pos.getX() * danger.get(i).pos.getX()) + (danger.get(i).pos.getY() * danger.get(i).pos.getY())));
+                }
+            }
+            double x = (pos.getX() - locclosestthreat.getX()) / (sqrt((locclosestthreat.getX() * locclosestthreat.getX()) + (locclosestthreat.getY() * locclosestthreat.getY()))) * speed;
+            double y = (pos.getY() - locclosestthreat.getY()) / (sqrt((locclosestthreat.getX() * locclosestthreat.getX()) + (locclosestthreat.getY() * locclosestthreat.getY()))) * speed;
+            Position escape = new Position(x + pos.getX(), y + pos.getY());
+            moveTo(escape);
+        } else if (thirst > hunger && food.size() != 0) {
+            double min = sightradius;
+            Position locclosestfood = null;
+            for (int i = 0; i < food.size(); i++) {
+                if (this.getPosition().distanceTo(food.get(i).getPosition()) < min) {
+                    min = this.getPosition().distanceTo(food.get(i).getPosition());
+                    locclosestfood = food.get(i).getPosition();
+                }
+            }
+            moveTo(locclosestfood);
+        } else if (thirst > hunger && food.size() != 0) {
+            double min = sightradius;
+            Position locclosestfriend = null;
+            for (int i = 0; i < kin.size(); i++) {
+                if (kin.get(i).getPosition().distanceTo(this.getPosition()) < min) {
+                    min = kin.get(i).getPosition().distanceTo(food.get(i).getPosition());
+                    locclosestfriend = kin.get(i).getPosition();
+                }
+            }
+            this.moveTo(locclosestfriend);
         }
     }
-    public void consume(Entity consumable){
+
+    public void consume(Entity consumable) {
         Entity f = consumable;
         Entity w = consumable; //for when there's a river
         if (this.hunger < 20) {
@@ -95,19 +142,20 @@ public class Entity {
                         this is also just a random increase rate for health as the animal eats food
                         this.health = this.health + (int)(this.health* 0.2);
                     }*/
-                }
-                else if (f instanceof Entity) {
+                } else if (f instanceof Entity) {
                     this.move(f.getPosition());
                     f.health = f.health - 15;
                     this.hunger = this.hunger + 15;
                 }
             }
         }
-        if (this.thirst < 20){
+        if (this.thirst < 20) {
             this.move(w.getPosition());
             this.thirst = this.thirst + 15;
-            }
         }
+    }
+
+
     public void reproduce(Entity e){
 
     }
@@ -115,15 +163,23 @@ public class Entity {
     public void planMove(ArrayList<Entity> closeentities){
 
     }
-    public void move(){
 
+    public void movePolar(double r, double theta){
+
+        pos.addX(r*Math.cos(theta));
+        pos.addY(r*Math.sin(theta));
     }
     public void move(Position target){
+
+    }
+    public void moveTo(Position target){
 
     }
     //replace void with ArrayList<Entity> vv
     public ArrayList<Entity> scan(int sightradius){
         entitiesWithinRadius(sightradius);
+        return null;
+
     }
     public int getRank(){
         return rank;
@@ -133,5 +189,22 @@ public class Entity {
     }
     public boolean getGender(){
         return gender;
+
+    }
+    public ArrayList<Entity> entitiesWithinRadius(int test){
+        return null;
+    }
+
+    public int getSightRadius(){
+        return sightradius;
+    }
+    public double getX(){
+        return getPosition().getX();
+    }
+    public double getY(){
+        return getPosition().getY();
+    }
+    public int getHealth(){
+        return health;
     }
 }

@@ -15,4 +15,23 @@ public class Position {
         return y;
     }
 
+
+    public void setX(double val){
+        this.x = val;
+    }
+
+    public void setY(double val){
+        this.y = val;
+    }
+
+    public void addX(double val){
+        this.x += val;
+    }
+    public void addY(double val){
+        this.y += val;
+    }
+    public double distanceTo(Position other) {
+        return Math.sqrt(Math.pow(x - other.getX(), 2) + Math.pow(y - other.getY(), 2));
+    }
+
 }
