@@ -94,6 +94,7 @@ public class Entity {
 
         }
 
+
         if( danger.size() != 0 ){
             /**
              * runs from closest threat for now, kind of stupid
@@ -107,14 +108,14 @@ public class Entity {
                     min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
-            //System.out.println(locClosestThreat);
+            System.out.println(locClosestThreat);
             double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
         }
         else if (thirst >= hunger && food.size() != 0) {
-            //System.out.println("2");
+            System.out.println("2");
             double min = sightradius;
             Position locClosestFood = null;
             for(int i = 0; i < food.size(); i ++){
@@ -126,7 +127,7 @@ public class Entity {
             moveTo(locClosestFood);
         }
         else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
-            //System.out.println("3");
+            System.out.println("3");
             double min = sightradius;
             Position locClosestFriend = null;
             for(int i = 0; i < kin.size(); i ++){
@@ -138,7 +139,7 @@ public class Entity {
             this.moveTo(locClosestFriend);
         }
         else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
-            //System.out.println("4");
+            System.out.println("4");
             randomForwardWalk();
         }
         danger.clear();
@@ -215,13 +216,14 @@ public class Entity {
         //altered by terrain
 
     }
-
-
-
     public void move(Position target){
 
     }
     public void moveTo(Position target){
+        double tempx = target.getX() - pos.getX();
+        double tempy = target.getY() - pos.getY();
+        movePolar(speed, Math.atan2(tempy, tempx));
+        direction = Math.atan2(tempy,tempx);
 
     }
     //replace void with ArrayList<Entity> vv
@@ -230,6 +232,7 @@ public class Entity {
         return null;
 
     }
+
     public ArrayList<Entity> entitiesWithinRadius(int test){
         return null;
     }
@@ -237,6 +240,7 @@ public class Entity {
 
         movePolar(rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
     }
+
     public int getRank(){
         return rank;
     }
@@ -246,6 +250,7 @@ public class Entity {
     public boolean getGender(){
         return gender;
     }
+
     public int getSightRadius(){
         return sightradius;
     }

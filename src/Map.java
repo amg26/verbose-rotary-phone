@@ -1,10 +1,7 @@
-import javafx.geometry.Pos;
-import sun.font.CompositeStrike;
-
 import java.util.Random;
 
 public class Map {
-    public static final double WATER_DEPTH = 80.0;
+    public static final double WATER_DEPTH = 50.0;
     private double[][] map;
     private int mapScale = 5;
 
@@ -26,8 +23,12 @@ public class Map {
 
     }
 
+    public boolean isUnderwater(Position pos) {
+        return getElevation(pos) <= WATER_DEPTH;
+    }
+
     public double getElevation(Position pos) {
-        return getElevation(pos.getY(), pos.getX());
+        return getElevation(pos.getX(), pos.getY());
     }
 
     //NS and EW are -1, 0 or 1
