@@ -115,8 +115,9 @@ public class Map {
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
 
-                    perlinNoise[x][y] = (double) noise(x/xscl+rand.nextDouble()/10, y/yscl+rand.nextDouble()/10, 0);
-                    perlinNoise[x][y] = (perlinNoise[x][y]+0.5)*190;   //generate values between 0 and 1
+                //perlinNoise[x][y] = (double) noise(x/xscl+rand.nextDouble()/10, y/yscl+rand.nextDouble()/10, 0);
+                perlinNoise[x][y] = (double) noise(x/xscl+rand.nextDouble()/10, y/yscl+rand.nextDouble()/10, 0);
+                perlinNoise[x][y] = (perlinNoise[x][y]+0.5)*190;   //generate values between 0 and 1
             }
         }
 
