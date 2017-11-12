@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Random;
 
+import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
 
 public class Entity {
@@ -13,6 +15,8 @@ public class Entity {
     protected int health;
     protected int maxhealth;
     protected int maxspeed;
+    protected Random rand;
+    protected double direction;
     public Entity(){
 
     }
@@ -29,7 +33,7 @@ public class Entity {
         if (hunger == 0 && thirst == 0){
             //sit nerd u ded
             health = 0;
-            this.die(); // pls dye
+            //this.die(); // pls dye
             return;
         }
         if (hunger == 0) {
@@ -111,7 +115,7 @@ public class Entity {
             }
             moveTo(locclosestfood);
         }
-        else if (thirst > hunger && food.size()!= 0){
+        else if (thirst > hunger && food.size()!= 0 && kin.size() != 0){
             double min = sightradius;
             Position locclosestfriend = null;
             for(int i = 0; i < kin.size(); i ++){
@@ -122,6 +126,11 @@ public class Entity {
             }
             this.moveTo(locclosestfriend);
         }
+        else if (thirst > hunger && food.size()!= 0 && kin.size() == 0){
+            randomForwardWalk();
+        }
+        this.hunger = hunger - 5;
+        this.thirst = thirst - 10;
     }
     public void consume(){
 
@@ -153,6 +162,10 @@ public class Entity {
     }
     public ArrayList<Entity> entitiesWithinRadius(int test){
         return null;
+    }
+    public void randomForwardWalk(){
+
+        movePolar(speed*rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
     }
     public int getRank(){
         return rank;
