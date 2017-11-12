@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Map {
-    public static final double WATER_DEPTH = 80.0;
+    public static final double WATER_DEPTH = 50.0;
     private double[][] map;
 
     public Map(int width, int height) {

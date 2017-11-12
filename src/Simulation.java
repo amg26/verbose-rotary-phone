@@ -7,7 +7,7 @@ public class Simulation {
     private ArrayList<Entity> entities;
 
     public Simulation() {
-        map = new Map(100, 100);
+        map = new Map(1000, 1000);
         entities = new ArrayList<>();
 
         //TEMPORARY
