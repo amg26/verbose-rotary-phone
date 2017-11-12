@@ -1,10 +1,12 @@
 public class Food extends Entity {
-    protected double size;
+    protected int size;
     protected int rank;
 
     //make a constructor for food
-    public Food (Position pos, double size, int rank) {
-//        super(pos,0, false, 0 );
+    public Food ( Map map, Position pos, int size, int rank) {
+        super(map,pos,0, false, 0, 0, 0, 0, 0, 0 );
+
+        this.speed = 0;
         this.size = size;
         this.rank = 0;
     }
@@ -16,5 +18,9 @@ public class Food extends Entity {
 
     public void regenerate (double size){
         if (size < 1) {size ++;}
+    }
+
+    public int getSize(){
+        return size;
     }
 }

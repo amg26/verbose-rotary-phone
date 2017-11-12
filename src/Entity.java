@@ -90,10 +90,10 @@ public class Entity {
                 this.reproduce(mate);
                 this.reproductionCooldown ++;
                 mate.reproductionCooldown++;
-                System.out.println(";)")
+                System.out.println(";)");
                 //return;
             }
-            if (min > 1){
+            if (min > 1 && this.reproductionCooldown%20 ==0){
                 /**
                  * moves towards it
                  * TODO: Fix according to how Phil does moveTo
@@ -158,7 +158,7 @@ public class Entity {
         kin.clear();
         food.clear();
 
-        //this.hunger = hunger - 5;
+        this.hunger = hunger - 5;
         //this.thirst = thirst - 10;
     }
 
@@ -192,6 +192,9 @@ public class Entity {
     public void reproduce(Entity e){
         if (e.gender){
             e.pregnant = true;
+        }
+        else if (gender){
+            gender = true;
         }
     }
     //should return position vv
