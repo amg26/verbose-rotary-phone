@@ -19,12 +19,12 @@ public class SimulationRenderer extends JPanel implements ActionListener {
 
         this.setPreferredSize(new Dimension(500, 500));
 
-        t = new Timer(50, this);
+        t = new Timer(5, this);
+        t.setActionCommand("nextTick");
         t.start();
     }
 
     public void tick(){
-        System.out.println("tick");
         simulation.tick();
         repaint();
     }
@@ -62,11 +62,14 @@ public class SimulationRenderer extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //if(e.getActionCommand().equals("nextTick")) {
-        //    tick();
-        //}
-        //System.out.println(e);
-        tick();
-
+        if(e.getActionCommand().equals("nextTick")) {
+            tick();
+        } else if(e.getActionCommand().equals("playPause")) {
+            if(t.isRunning()) {
+                t.stop();
+            } else {
+                t.start();
+            }
+        }
     }
 }

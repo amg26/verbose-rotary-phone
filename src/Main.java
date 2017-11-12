@@ -30,10 +30,10 @@ public  class Main {
         nextBtn.setActionCommand("nextTick");
         controls.add(nextBtn);
 
-        JButton playBtn = new JButton("Play");
+        JButton playBtn = new JButton("Play/Pause");
         playBtn.setSize(new Dimension(50, 20));
         playBtn.addActionListener(simulationRenderer);
-        playBtn.setActionCommand("play");
+        playBtn.setActionCommand("playPause");
         controls.add(playBtn);
 
         window.add(controls);
