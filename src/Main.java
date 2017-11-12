@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public  class Main {
     public static void main(String[] args){
@@ -11,8 +13,9 @@ public  class Main {
 
 
         JFrame window = new JFrame("SIMULATION");
+        window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
-        window.setSize(500, 500);
+        window.setSize(600, 600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setVisible(true);
 
@@ -21,12 +24,12 @@ public  class Main {
         SimulationRenderer simulationRenderer = new SimulationRenderer(simulation);
         window.add(simulationRenderer);
 
-        simulationRenderer.tick();
-
-
-
-
-        //tick simulation
-        //tick simulationRendereerererrerer
+        JPanel controls = new JPanel();
+        JButton btn = new JButton("Next Tick");
+        btn.setSize(new Dimension(50, 20));
+        btn.addActionListener(simulationRenderer);
+        btn.setActionCommand("nextTick");
+        controls.add(btn);
+        window.add(controls);
     }
 }
