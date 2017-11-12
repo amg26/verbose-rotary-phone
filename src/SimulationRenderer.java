@@ -20,16 +20,15 @@ public class SimulationRenderer extends JPanel implements ActionListener {
         this.simulation = simulation;
         map = simulation.getMap().getMap(); // lol
 
-        entities = simulation.getEntities();
+        this.setPreferredSize(new Dimension(10000, 10000));
 
-        this.setPreferredSize(new Dimension(1000, 1000));
+        entities = simulation.getEntities();
 
         bg = new BufferedImage(map[0].length * TILE_SIZE, map.length * TILE_SIZE, BufferedImage.TYPE_INT_RGB);
         generateBackground();
 
-        t = new Timer(100, this);
+        t = new Timer(10, this);
         t.setActionCommand("nextTick");
-        t.start();
     }
 
     public void tick(){
@@ -73,7 +72,7 @@ public class SimulationRenderer extends JPanel implements ActionListener {
             }else{
                 g.setColor(Color.RED);
             }
-            g.fillOval((int)e.getX(), (int)e.getY(), 10, 10);
+            g.fillOval((int)e.getX() * 5, (int)e.getY() * 5, 16, 16);
 
         }
     }

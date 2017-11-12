@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class Todd extends Entity {
     Random rand;
-    public Todd(Position pos, int speed){
-        super(pos, speed, false, 10, 100, 100, 0, 0,speed);
+    public Todd(Map map, Position pos, int speed){
+        super(map, pos, speed, false, 10, 100, 100, 0, 0,speed);
         rand = new Random();
     }
 

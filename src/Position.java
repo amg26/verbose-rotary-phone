@@ -1,3 +1,5 @@
+import javafx.geometry.Pos;
+
 public class Position {
     private double x;
     private double y;
@@ -5,6 +7,10 @@ public class Position {
     public Position(double x, double y) {
         this.x = x;
         this.y  = y;
+    }
+    public Position(Position pos){
+        this.x = pos.getX();
+        this.y = pos.getY();
     }
 
     public double getX() {
