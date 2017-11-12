@@ -95,7 +95,6 @@ public class Entity {
              * runs from closest threat for now, kind of stupid
              * TODO: calculate best escape route, stop to consume if not at maxspeed
              */
-            System.out.println("1");
             double min = sightradius;
             Position locClosestThreat = danger.get(0).getPosition();
             for(int i = 0; i < danger.size(); i ++){
@@ -104,14 +103,12 @@ public class Entity {
                     min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
-            System.out.println(locClosestThreat);
             double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
             Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
         }
         else if (thirst >= hunger && food.size() != 0) {
-            System.out.println("2");
             double min = sightradius;
             Position locClosestFood = null;
             for(int i = 0; i < food.size(); i ++){
@@ -123,7 +120,6 @@ public class Entity {
             moveTo(locClosestFood);
         }
         else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
-            System.out.println("3");
             double min = sightradius;
             Position locClosestFriend = null;
             for(int i = 0; i < kin.size(); i ++){
@@ -135,7 +131,6 @@ public class Entity {
             this.moveTo(locClosestFriend);
         }
         else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
-            System.out.println("4");
             randomForwardWalk();
         }
         danger.clear();

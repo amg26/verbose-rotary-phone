@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public  class Main {
     public static void main(String[] args){
         Map m = new Map(1000, 1000);
+        System.out.println(m.getMap().length);
         System.out.println(m.getElevation(3.5, 2.5));
 
         Position p = new Position(7.3, 8.2);
@@ -16,14 +17,18 @@ public  class Main {
 
         window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
-        window.setSize(600, 600);
+        window.setSize(1000, 1000);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+
 
 
         Simulation simulation = new Simulation();
 
         SimulationRenderer simulationRenderer = new SimulationRenderer(simulation);
-        window.add(simulationRenderer);
+        // window.add(simulationRenderer);
+        JScrollPane scrollPane = new JScrollPane(simulationRenderer);
+        window.add(scrollPane);
 
         JPanel controls = new JPanel();
         JButton nextBtn = new JButton("Next Tick");
