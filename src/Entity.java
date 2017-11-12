@@ -14,16 +14,10 @@ public class Entity {
     protected int rank;
     protected int health;
     protected int maxhealth;
-
     protected int maxspeed;
-<<<<<<< HEAD
-
-    public Entity() {
-=======
     protected Random rand;
     protected double direction;
     public Entity(){
->>>>>>> e00948e2864c50a7744558470158b709d7473b9e
 
     }
 
@@ -196,8 +190,7 @@ public class Entity {
         return null;
 
     }
-<<<<<<< HEAD
-=======
+
     public ArrayList<Entity> entitiesWithinRadius(int test){
         return null;
     }
@@ -205,7 +198,7 @@ public class Entity {
 
         movePolar(speed*rand.nextDouble(), ((rand.nextDouble()-.5)+direction));
     }
->>>>>>> e00948e2864c50a7744558470158b709d7473b9e
+
     public int getRank(){
         return rank;
     }
@@ -216,9 +209,7 @@ public class Entity {
         return gender;
 
     }
-    public ArrayList<Entity> entitiesWithinRadius(int test){
-        return null;
-    }
+
 
     public int getSightRadius(){
         return sightradius;
