@@ -20,24 +20,23 @@ public class Entity {
     public Entity(){
 
     }
-
-    public Entity(Position pos, int maxspeed, boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
-
+    public Entity(Position pos, int maxspeed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
         this.pos = pos;
         this.maxspeed = maxspeed;
         this.gender = gender;
         this.sightradius = sightradius;
         this.rank = rank;
         this.speed = speed;
+        rand = new Random();
+        direction = 2*Math.PI*rand.nextDouble();
     }
-
     //based on needs + want to reproduce + not die
-    public void tick() {
-        if (hunger == 0 && thirst == 0) {
+    public void tick(ArrayList<Entity> closeEntities) {
+
+        if (hunger == 0 && thirst == 0){
             //sit nerd u ded
             health = 0;
             //this.die(); // pls dye
-            return;
         }
         if (hunger == 0) {
             speed = (int) (0.5 * maxspeed);
@@ -56,85 +55,97 @@ public class Entity {
         ArrayList<Entity> kin = new ArrayList<>();
         ArrayList<Entity> danger = new ArrayList<>();
         ArrayList<Entity> food = new ArrayList<>();
-        for (int i = 0; i < scan(sightradius).size(); i++) {
-            if (scan(sightradius).get(i).getRank() < rank) {
-                food.add(scan(sightradius).get(i));
+        for (int i = 0; i < closeEntities.size(); i++) {
+            if (closeEntities.get(i).getRank() < rank) {
+                food.add(closeEntities.get(i));
             }
-            if (scan(sightradius).get(i).getRank() > rank) {
-                danger.add(scan(sightradius).get(i));
+            if (closeEntities.get(i).getRank() > rank) {
+                    danger.add(closeEntities.get(i));
             }
-            if (scan(sightradius).get(i).getRank() == rank) {
-                kin.add(scan(sightradius).get(i));
+            if (closeEntities.get(i).getRank() == rank) {
+                kin.add(closeEntities.get(i));
             }
         }
-        if (hunger > 70 && thirst > 70 && danger.size() == 0) {
+        if(hunger > 70 && thirst > 70 && danger.size() == 0 && kin.size() != 0){
             double min = sightradius;
-            Position locclosestmate;
-            for (int i = 0; i < kin.size(); i++) {
-                if ((sqrt((kin.get(i).pos.getX() * kin.get(i).pos.getX()) + (kin.get(i).pos.getY() * kin.get(i).pos.getY()))) < min && this.gender != kin.get(i).getGender()) {
-                    locclosestmate = kin.get(i).getPosition();
-                    min = (sqrt((kin.get(i).pos.getX() * kin.get(i).pos.getX()) + (kin.get(i).pos.getY() * kin.get(i).pos.getY())));
-                    if (min < 1) {
+            Position locClosestMate;
+            for(int i = 0; i < kin.size(); i ++){
+                if ((sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())))< min && this.gender != kin.get(i).getGender()){
+                    locClosestMate = kin.get(i).getPosition();
+                    min = (sqrt((kin.get(i).pos.getX()*kin.get(i).pos.getX())+(kin.get(i).pos.getY()*kin.get(i).pos.getY())));
+                    if (min < 1){
                         this.reproduce(kin.get(i));
-                        return;
+                        //return;
                     }
-                    if (min > 1) {
+                    if (min > 1){
                         /**
                          * moves towards it
                          * TODO: Fix according to how Phil does moveTo
                          */
-                        moveTo(locclosestmate);
+                        moveTo(locClosestMate);
                     }
                 }
             }
 
         }
+
+        if( danger.size() != 0 ){
         if (danger.size() != 0) {
             /**
              * runs from closest threat for now, kind of stupid
              * TODO: calculate best escape route, stop to consume if not at maxspeed
              */
+            System.out.println("1");
             double min = sightradius;
-            Position locclosestthreat = null;
-            for (int i = 0; i < danger.size(); i++) {
-                if ((sqrt((danger.get(i).pos.getX() * danger.get(i).pos.getX()) + (danger.get(i).pos.getY() * danger.get(i).pos.getY()))) < min) {
-                    locclosestthreat = danger.get(i).getPosition();
-                    min = (sqrt((danger.get(i).pos.getX() * danger.get(i).pos.getX()) + (danger.get(i).pos.getY() * danger.get(i).pos.getY())));
+            Position locClosestThreat = danger.get(0).getPosition();
+            for(int i = 0; i < danger.size(); i ++){
+                if ((sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())))< min){
+                    locClosestThreat = danger.get(i).getPosition();
+                    min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
                 }
             }
-            double x = (pos.getX() - locclosestthreat.getX()) / (sqrt((locclosestthreat.getX() * locclosestthreat.getX()) + (locclosestthreat.getY() * locclosestthreat.getY()))) * speed;
-            double y = (pos.getY() - locclosestthreat.getY()) / (sqrt((locclosestthreat.getX() * locclosestthreat.getX()) + (locclosestthreat.getY() * locclosestthreat.getY()))) * speed;
-            Position escape = new Position(x + pos.getX(), y + pos.getY());
+            System.out.println(locClosestThreat);
+            double x = (pos.getX() - locClosestThreat.getX())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
+            double y = (pos.getY() - locClosestThreat.getY())/(sqrt((locClosestThreat.getX()*locClosestThreat.getX())+(locClosestThreat.getY()*locClosestThreat.getY())))*speed;
+            Position escape = new Position(x+pos.getX(), y+pos.getY());
             moveTo(escape);
-        } else if (thirst > hunger && food.size() != 0) {
+        }
+        else if (thirst >= hunger && food.size() != 0) {
+            System.out.println("2");
             double min = sightradius;
-            Position locclosestfood = null;
-            for (int i = 0; i < food.size(); i++) {
-                if (this.getPosition().distanceTo(food.get(i).getPosition()) < min) {
+            Position locClosestFood = null;
+            for(int i = 0; i < food.size(); i ++){
+                if(this.getPosition().distanceTo(food.get(i).getPosition()) < min){
                     min = this.getPosition().distanceTo(food.get(i).getPosition());
-                    locclosestfood = food.get(i).getPosition();
+                    locClosestFood = food.get(i).getPosition();
                 }
             }
-            moveTo(locclosestfood);
+            moveTo(locClosestFood);
         }
-        else if (thirst > hunger && food.size()!= 0 && kin.size() != 0){
-
+        else if (thirst >= hunger && food.size()!= 0 && kin.size() != 0){
+            System.out.println("3");
             double min = sightradius;
-            Position locclosestfriend = null;
-            for (int i = 0; i < kin.size(); i++) {
-                if (kin.get(i).getPosition().distanceTo(this.getPosition()) < min) {
+            Position locClosestFriend = null;
+            for(int i = 0; i < kin.size(); i ++){
+                if(kin.get(i).getPosition().distanceTo(this.getPosition()) < min){
                     min = kin.get(i).getPosition().distanceTo(food.get(i).getPosition());
-                    locclosestfriend = kin.get(i).getPosition();
+                    locClosestFriend = kin.get(i).getPosition();
                 }
             }
-            this.moveTo(locclosestfriend);
+            this.moveTo(locClosestFriend);
         }
-        else if (thirst > hunger && food.size()!= 0 && kin.size() == 0){
+        else if (thirst >= hunger && food.size() == 0 && kin.size() == 0){
+            System.out.println("4");
             randomForwardWalk();
         }
-        this.hunger = hunger - 5;
-        this.thirst = thirst - 10;
+        danger.clear();
+        kin.clear();
+        food.clear();
+
+        //this.hunger = hunger - 5;
+        //this.thirst = thirst - 10;
     }
+    public void consume(){
 
     public void consume(Entity consumable) {
         Entity f = consumable;
@@ -163,8 +174,6 @@ public class Entity {
             this.thirst = this.thirst + 15;
         }
     }
-
-
     public void reproduce(Entity e){
 
     }
@@ -207,9 +216,7 @@ public class Entity {
     }
     public boolean getGender(){
         return gender;
-
     }
-
 
     public int getSightRadius(){
         return sightradius;

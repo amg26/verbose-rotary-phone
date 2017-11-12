@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Todd extends Entity {
@@ -8,7 +9,7 @@ public class Todd extends Entity {
     }
 
     @Override
-    public void tick(){
+    public void tick(ArrayList<Entity> closeEntities){
         //super.tick();
         randomWalk();
     }

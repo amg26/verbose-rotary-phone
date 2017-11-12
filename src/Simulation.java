@@ -26,11 +26,10 @@ public class Simulation {
     public void tick() {
 
         for(Entity e : entities) {
-            //e.tick(entitiesWithinRadius(e, e.getSightRadius()));
-            e.tick();
+            e.tick(entitiesWithinRadius(e));
+            //e.tick(entities);
         }
     }
-
 
     public ArrayList<Entity> entitiesWithinRadius(Entity ent, double radius) {
         ArrayList<Entity> closeEntities = new ArrayList<>();
@@ -40,7 +39,7 @@ public class Simulation {
                 closeEntities.add(other);
             }
         }
-
+        closeEntities.remove(ent);
         return closeEntities;
     }
 
