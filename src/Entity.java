@@ -12,15 +12,17 @@ public class Entity {
     protected int rank;
     protected int health;
     protected int maxhealth;
+    protected int maxspeed;
     public Entity(){
 
     }
-    public Entity(Position pos, int speed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger) {
+    public Entity(Position pos, int maxspeed , boolean gender, int sightradius, int rank, int health, int thirst, int hunger, int speed) {
         this.pos = pos;
-        this.speed = speed;
+        this.maxspeed = maxspeed;
         this.gender = gender;
         this.sightradius = sightradius;
         this.rank = rank;
+        this.speed = speed;
     }
     //based on needs + want to reproduce + not die
     public void tick() {
@@ -30,14 +32,14 @@ public class Entity {
             return;
         }
         if (hunger == 0) {
-            speed = (int) (0.5 * speed);
+            speed = (int) (0.5 * maxspeed);
             if (health < (int) (0.2 * maxhealth)) {
                 health = 0;
             }
             health = (int) (0.8 * health);
         }
         if (thirst == 0) {
-            speed = (int) (0.5 * speed);
+            speed = (int) (0.5 * maxspeed);
             if (health < (int) (0.2 * maxhealth)) {
                 health = 0;
             }
@@ -76,8 +78,23 @@ public class Entity {
 
         }
         if( danger.size() != 0 ){
-            //runs from closest threat for now, kind of stupid
-
+            /**
+             * runs from closest threat for now, kind of stupid
+             * TODO: calculate best escape route, stop to consume if not at maxspeed
+             */
+            double min = sightradius;
+            Position locclosestthreat = null;
+            for(int i = 0; i < danger.size(); i ++){
+                if ((sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())))< min){
+                    locclosestthreat = danger.get(i).getPosition();
+                    min = (sqrt((danger.get(i).pos.getX()*danger.get(i).pos.getX())+(danger.get(i).pos.getY()*danger.get(i).pos.getY())));
+                }
+            }
+            double x = (pos.getX() - locclosestthreat.getX())/(sqrt((locclosestthreat.getX()*locclosestthreat.getX())+(locclosestthreat.getY()*locclosestthreat.getY())))*speed;
+            double y = (pos.getY() - locclosestthreat.getY())/(sqrt((locclosestthreat.getX()*locclosestthreat.getX())+(locclosestthreat.getY()*locclosestthreat.getY())))*speed;
+            Position escape = new Position(x+pos.getX(), y+pos.getY());
+            moveTo(escape);
+            return;
         }
     }
     public void consume(){
@@ -90,10 +107,10 @@ public class Entity {
     public void planMove(ArrayList<Entity> closeentities){
 
     }
-    public void move(){
+    public void move(Position target){
 
     }
-    public void move(Position target){
+    public void moveTo(Position target){
 
     }
     //replace void with ArrayList<Entity> vv
@@ -113,6 +130,9 @@ public class Entity {
     }
     public boolean getGender(){
         return gender;
+    }
+    public int getSightRadius(){
+        return sightradius;
     }
     public double getX(){
         return getPosition().getX();
