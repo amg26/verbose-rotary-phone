@@ -23,10 +23,10 @@ public class SimulationRenderer extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponents(g);
-        g.drawString("HELLO", 10, 10);
+
         for(int j = 0; j < map.length; j++) {
             for(int i = 0; i < map[0].length; i++) {
-                Color c = new Color(0, (int) map[j][i], 0);
+                Color c = new Color((int) map[j][i], (int) map[j][i], (int) map[j][i]);
                 g.setColor(c);
                 g.fillRect(i * 5, j * 5, 5, 5);
             }

@@ -1,4 +1,3 @@
-import java.sql.Array;
 import java.util.ArrayList;
 
 import static java.lang.Math.sqrt;

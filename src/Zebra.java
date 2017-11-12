@@ -5,7 +5,7 @@ public class Zebra extends Entity{
         super(pos, speed, gender, 10, 3, 100, 0, 0);
     }
     public ArrayList<Entity> see(int sightradius){
-        entitiesWithinRadius(sightradius);
+        // entitiesWithinRadius(sightradius);
         return null;
     }
 

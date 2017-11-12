@@ -17,12 +17,20 @@ public class Simulation {
 
     public void tick() {
         for(Entity e : entities) {
-            //e.tick();
+            // e.tick(entitiesWithinRadius(e, e.getSightRadius()));
         }
     }
 
-    public ArrayList<Entity> entitiesWithinRadius(double radius) {
-        return null;
+    public ArrayList<Entity> entitiesWithinRadius(Entity ent, double radius) {
+        ArrayList<Entity> closeEntities = new ArrayList<>();
+
+        for(Entity other : entities) {
+            if(other.getPosition().distanceTo(ent.getPosition()) <= radius) {
+                closeEntities.add(other);
+            }
+        }
+
+        return closeEntities;
     }
 
     public ArrayList<Entity> getEntities() {
