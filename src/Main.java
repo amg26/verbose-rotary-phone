@@ -17,7 +17,6 @@ public  class Main {
 
         window.setSize(600, 600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setVisible(true);
 
         Simulation simulation = new Simulation();
 
@@ -25,11 +24,20 @@ public  class Main {
         window.add(simulationRenderer);
 
         JPanel controls = new JPanel();
-        JButton btn = new JButton("Next Tick");
-        btn.setSize(new Dimension(50, 20));
-        btn.addActionListener(simulationRenderer);
-        btn.setActionCommand("nextTick");
-        controls.add(btn);
+        JButton nextBtn = new JButton("Next Tick");
+        nextBtn.setSize(new Dimension(50, 20));
+        nextBtn.addActionListener(simulationRenderer);
+        nextBtn.setActionCommand("nextTick");
+        controls.add(nextBtn);
+
+        JButton playBtn = new JButton("Play");
+        playBtn.setSize(new Dimension(50, 20));
+        playBtn.addActionListener(simulationRenderer);
+        playBtn.setActionCommand("play");
+        controls.add(playBtn);
+
         window.add(controls);
+
+        window.setVisible(true);
     }
 }
