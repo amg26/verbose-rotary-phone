@@ -189,6 +189,10 @@ public class Entity {
 
     }
     public void moveTo(Position target){
+        double tempx = target.getX() - pos.getX();
+        double tempy = target.getY() - pos.getY();
+        movePolar(speed, Math.atan2(tempy, tempx));
+        direction = Math.atan2(tempy,tempx);
 
     }
     //replace void with ArrayList<Entity> vv
