@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class Map {
+    public static final double WATER_DEPTH = 80.0;
     private double[][] map;
 
     public Map(int width, int height) {
@@ -69,22 +70,6 @@ public class Map {
             {0,0,0,0,0,1,1,1,0,0},
             {0,0,0,0,0,0,0,0,0,0}
         };
-    }
-
-    public static double[][] generateSimplexNoise(int width, int height){
-        double[][] simplexnoise = new double[width][height];
-        double frequency = 5.0f / (double) width;
-        Random rand = new Random();
-
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                //simplexnoise[x][y] = (double) noise(x * frequency,y * frequency);
-                simplexnoise[x][y] = rand.nextDouble();
-                //simplexnoise[x][y] = (simplexnoise[x][y] + 1) / 2;   //generate values between 0 and 1
-            }
-        }
-
-        return simplexnoise;
     }
 
     public static double[][] generatePerlinNoise(int width, int height){
