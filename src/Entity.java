@@ -4,6 +4,9 @@ import java.util.Random;
 import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
 
+
+//TODO- FIX THIS
+
 public class Entity {
     protected int reproductionCooldown;
     protected Position pos;
@@ -267,8 +270,9 @@ public class Entity {
 
 
 
-        pos.addX((((speed/5)*r*Math.cos(theta))));//-Math.abs(speed*(alteredSpeed/500));//*r*Math.cos(theta)));
-        pos.addY((((speed/5)*r*Math.sin(theta))));//-Math.abs(speed*(alteredSpeed/500));//*r*Math.sin(theta)));
+        System.out.println("alteredSpeed"+alteredSpeed);
+        pos.addX(((speed/5)*r*Math.cos(theta)));//-Math.abs(speed*(alteredSpeed/10))*r*Math.cos(theta));
+        pos.addY(((speed/5)*r*Math.sin(theta)));//-Math.abs(speed*(alteredSpeed/10))*r*Math.sin(theta));
         //pos.addX(speed);
         //pos.addY(speed);
 
