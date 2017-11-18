@@ -1,8 +1,22 @@
 import java.util.ArrayList;
 
-public class Lion extends Entity{
-    public Lion(Map map, Position pos, double maxspeed, boolean gender){
-        super(map, pos, 2.3, gender, 30, 200, 100, 100, 100, 2.3);
+public class Lion extends Animal{
+    static int defaultRank = 50;
+    static double defaultSightRadius = 30;
+    static double defaultHealth = 100;
+    static double defaultHunger = 100;
+    static double defaultThirst = 100;
+    static double defaultMaxSpeed = 7.2;
+
+
+    public Lion(Map map, Position pos, double direction, boolean gender){
+        super(map, pos, direction, gender);
+        hunger = maxHunger = defaultHunger;
+        thirst = maxThirst = defaultThirst;
+        sightRadius = defaultSightRadius;
+        rank = defaultRank;
+        maxSpeed = defaultMaxSpeed;
+        speed = maxSpeed;
     }
     public ArrayList<Entity> see(int sightradius){
         // entitiesWithinRadius(sightradius);

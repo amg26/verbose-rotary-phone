@@ -1,8 +1,27 @@
 import java.util.ArrayList;
 
-public class Zebra extends Entity{
-    public Zebra(Map map, Position pos, double maxspeed, boolean gender){
-        super(map, pos, 2.6, gender, 30, 3, 100, 100, 100, 2.6);
+public class Zebra extends Animal{
+    //these are all of the 'properties' of a zebra
+    static int defaultRank = 5;
+    static double defaultSightRadius = 30;
+    static double defaultHealth = 100;
+    static double defaultHunger = 100;
+    static double defaultThirst = 100;
+    static double defaultMaxSpeed = 7.2;
+
+
+    public Zebra(Map map, Position pos, double direction, boolean gender){
+        super(map, pos, direction, gender);
+        //these should probably be in the constructor, i guess that's the point
+        hunger = maxHunger = defaultHunger;
+        thirst = maxThirst = defaultThirst;
+        sightRadius = defaultSightRadius;
+        rank = defaultRank;
+        maxSpeed = defaultMaxSpeed;
+        speed = maxSpeed;
+
+
+
     }
     public ArrayList<Entity> see(int sightradius){
         // entitiesWithinRadius(sightradius);

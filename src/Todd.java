@@ -1,20 +1,41 @@
 import java.util.ArrayList;
-import java.util.Random;
 
-public class Todd extends Entity {
-    Random rand;
-    public Todd(Map map, Position pos, double speed){
-        super(map, pos, 1, false, 50, 100, 100, 100, 100,1);
-        rand = new Random();
+public class Todd extends Animal{
+    static int defaultRank = 30;
+    static double defaultSightRadius = 30;
+    static double defaultHealth = 100;
+    static double defaultHunger = 100;
+    static double defaultThirst = 100;
+    static double defaultMaxSpeed = 3.5;
+
+    static final boolean toddsGender = false;
+
+
+    public Todd(Map map, Position pos, double direction){
+        super(map, pos, direction, toddsGender);
+        hunger = maxHunger = defaultHunger;
+        thirst = maxThirst = defaultThirst;
+        sightRadius = defaultSightRadius;
+        rank = defaultRank;
+        maxSpeed = defaultMaxSpeed;
+        speed = maxSpeed;
+
+
     }
-
-    //@Override
-    //public void tick(ArrayList<Entity> closeEntities){
-    //    super.ti;
-        //randomWalk();
-    //}
-    public void randomWalk(){
-        movePolar(speed*rand.nextDouble(), (2*3.141592)*rand.nextDouble());
+    public ArrayList<Entity> see(int sightradius){
+        // entitiesWithinRadius(sightradius);
+        return null;
     }
+    public void tick(ArrayList<Entity> closeEntities){
+        super.tick(closeEntities);
+        //System.out.println("hunger:"+hunger);
+        //System.out.println("closeEntities: "+closeEntities);
 
+    }
+    public void dance(double vigour){
+
+    }
+    public void reproduce(Entity e){
+
+    }
 }

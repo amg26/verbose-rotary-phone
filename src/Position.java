@@ -13,6 +13,10 @@ public class Position {
         this.y = pos.getY();
     }
 
+    public Position add(double dx, double dy){
+        return new Position(this.x+dx, this.y+dy);
+    }
+
     public double getX() {
         return x;
     }

@@ -1,8 +1,21 @@
 import java.util.ArrayList;
 
-public class Giraffe extends Entity{
-    public Giraffe(Map map, Position pos, double maxspeed, boolean gender){
-        super(map, pos, 2.7, gender, 30, 2, 100, 100, 100, 2.7);
+public class Giraffe extends Animal{
+    static int defaultRank = 5;
+    static double defaultSightRadius = 30;
+    static double defaultHealth = 100;
+    static double defaultHunger = 100;
+    static double defaultThirst = 100;
+    static double defaultMaxSpeed = 7.2;
+
+    public Giraffe(Map map, Position pos, double direction, boolean gender){
+        super(map, pos, direction, gender);
+        hunger = maxHunger = defaultHunger;
+        thirst = maxThirst = defaultThirst;
+        sightRadius = defaultSightRadius;
+        rank = defaultRank;
+        maxSpeed = defaultMaxSpeed;
+        speed = maxSpeed;
     }
     public ArrayList<Entity> see(int sightradius){
         // entitiesWithinRadius(sightradius);

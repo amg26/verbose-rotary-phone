@@ -6,15 +6,17 @@ import java.util.Random;
 public class Simulation {
     private Map map;
     private ArrayList<Entity> entities;
-    private Random rand;
+    private ArrayList<Animal> animals;
     private ArrayList<Food> food;
 
     public Simulation() {
         map = new Map(1000, 1000);
+
         entities = new ArrayList<>();
-        rand = new Random();
-        food = new ArrayList<Food>();
-        for(int i = 0; i < 100; i++) {
+        animals = new ArrayList<>();
+        food = new ArrayList<>();
+
+        for(int i = 0; i < 1; i++) {
             Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
             //System.out.println(pos);
             if(!map.isUnderwater(pos)) {
@@ -22,13 +24,14 @@ public class Simulation {
                 //Food pieceOfFood = new Food(map ,pos, 5, 0 );
                 //entities.add(pieceOfFood);
                 //food.add(pieceOfFood);
-                Lion lion = new Lion(map, pos, 1, rand.nextBoolean());
+                Lion lion = new Lion(map, pos, 1, RNG.getInstance().nextBoolean());
                 entities.add(lion);
+                animals.add(lion);
             } else {
                 i--;
             }
         }
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 1; i++) {
             Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
             //System.out.println(pos);
             if(!map.isUnderwater(pos)) {
@@ -36,22 +39,25 @@ public class Simulation {
                 //Food pieceOfFood = new Food(map ,pos, 5, 0 );
                 //entities.add(pieceOfFood);
                 //food.add(pieceOfFood);
-                Zebra zebra = new Zebra(map, pos, 3.3, rand.nextBoolean());
+                Zebra zebra = new Zebra(map, pos, 3.3, RNG.getInstance().nextBoolean());
                 entities.add(zebra);
+                animals.add(zebra);
             } else {
                 i--;
             }
         }
-        for(int i=0; i<5; i++){
-            for(int j=0; j<5; j++){
-                Todd todd = new Todd(map, new Position(i*16, j*16), 3);
+        for(int i=0; i<10; i++){
+            for(int j=0; j<10; j++){
+                Todd todd = new Todd(map, new Position(i*16, j*16), 0);
                 entities.add(todd);
+                animals.add(todd);
             }
         }
-        for(int i=0; i<25; i++){
+        for(int i=0; i<10; i++){
             for(int j=0; j<10; j++){
-                Giraffe giraffe = new Giraffe(map, new Position(i*14+50, j*14+50), 2.5, rand.nextBoolean());
+                Giraffe giraffe = new Giraffe(map, new Position(i*14+50, j*14+50), 2.5, RNG.getInstance().nextBoolean());
                 entities.add(giraffe);
+                animals.add(giraffe);
             }
         }
 
@@ -64,7 +70,11 @@ public class Simulation {
     }
 
     public void generateAnimal(int type, Position pos){
-        //entities.add(new Giraffe(map, pos, 2, rand.nextBoolean()));
+
+        Giraffe g = new Giraffe(map, pos, 0, RNG.getInstance().nextBoolean());
+        entities.add(g);
+        animals.add(g);
+        /*
         switch(type){
             case 0:
                 entities.add(new Zebra(map, pos,2, rand.nextBoolean()));
@@ -82,6 +92,7 @@ public class Simulation {
                 entities.add(new Zebra(map, pos, 2, rand.nextBoolean()));
 
         }
+        */
     }
 
     public void tick() {
@@ -90,6 +101,7 @@ public class Simulation {
             e.tick(entitiesWithinRadius(e));
             //e.tick(entities);
         }
+        /*
         for (Entity e : entities){
             if( e.pregnant){
                 Position baby = new Position(e.getPosition().getX(), e.getPosition().getY());
@@ -99,6 +111,7 @@ public class Simulation {
                 }
             }
         }
+        */
 
         for (int i = food.size()-1; i > 0; i --){
             if (food.get(i).getSize() <= 1){
@@ -106,10 +119,12 @@ public class Simulation {
                 entities.remove(food.get(i));
             }
         }
-        for (int i = entities.size()-1; i > 0; i --){
+        for (int i = animals.size()-1; i > 0; i --){
             //System.out.println(entities.get(i).health);
-            if( entities.get(i).health <= 0){
-                entities.remove(i);
+            if( animals.get(i).isDead() ){
+                animals.remove(i);
+                //hmmm
+                entities.remove(animals.get(i));
             }
         }
     }

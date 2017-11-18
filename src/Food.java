@@ -6,7 +6,7 @@ public class Food extends Entity {
 
     //make a constructor for food
     public Food ( Map map, Position pos, int size, int rank) {
-        super(map,pos,0, false, 0, 0, 100, 0, 0, 0 );
+        super(map,pos,0);
         System.out.println("MAKIN SOME FOOD");
         this.speed = 0;
         this.size = size;
