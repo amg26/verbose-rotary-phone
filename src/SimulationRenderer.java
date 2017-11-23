@@ -15,51 +15,15 @@ public class SimulationRenderer extends JPanel implements ActionListener, MouseL
     private ArrayList<Entity> entities;
     private BufferedImage bg;
 
+    private double zoomx=1, zoomy=1;
+
     //IMAGE FILES
     private Image zebraImage;
 
     //which one to generate when clicking
     private int currentAnimal;
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println("CLICK");
-        //5 is map scale
-        Position mousePos = new Position(e.getX()/5, e.getY()/5);
-        simulation.generateAnimal(1, mousePos);
-        if(e.getButton()== InputEvent.BUTTON1_MASK){
-            simulation.generateAnimal(1, mousePos);
-        }else if(e.getButton()==InputEvent.BUTTON2_MASK){
-            simulation.generateAnimal(2, mousePos);
-        }
-    }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("PRESS");
-        if(e.getButton() == MouseEvent.BUTTON2){
-            if(currentAnimal<3){
-                currentAnimal++;
-            }else{
-                currentAnimal=0;
-            }
-        }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 
     private Image toddImage;
     private Image lionImage;
@@ -100,6 +64,8 @@ public class SimulationRenderer extends JPanel implements ActionListener, MouseL
 
     public void tick(){
         simulation.tick();
+        //THis in no way indicates any sort of larger structural problem
+        revalidate();
         repaint();
     }
 
@@ -127,28 +93,52 @@ public class SimulationRenderer extends JPanel implements ActionListener, MouseL
 
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponents(g);
+        //super.paintComponents(g);
+        Graphics2D g2 = (Graphics2D) g;
+
+        super.paintComponent(g);
+
+        g2.scale(zoomx, zoomy);
+
 
         g.drawImage(bg, 0, 0, null);
 
+        g.drawString(""+currentAnimal,10,10);
+
         for(Entity e : entities){
             if(e.getClass() == Zebra.class){
-                g.drawImage(zebraImage, (int)(e.getX() * 5), (int)(e.getY() * 5), null);
+                g.setColor(Color.GREEN);
+                g.fillOval((int)e.getX(), (int)e.getY(), 16, 16);
+                g.drawImage(zebraImage, (int)(e.getX()), (int)(e.getY()), null);
             }else if(e.getClass() == Todd.class){
-                g.drawImage(toddImage, (int)(e.getX()*5), (int)(e.getY()*5), null);
+                g.drawImage(toddImage, (int)(e.getX()), (int)(e.getY()), null);
             }else if(e.getClass() == Food.class){
                 Food f = (Food)e;
                 g.setColor(Color.RED);
-                g.fillOval((int)(f.getX()*5),(int)(f.getY()*5), f.getSize()*3, f.getSize()*3);
+                g.fillOval((int)(f.getX()),(int)(f.getY()), f.getSize()*1, f.getSize()*1);
             }else if(e.getClass() == Lion.class){
-                g.drawImage(lionImage, (int)(e.getX()*5), (int)(e.getY()*5), null);
+                g.setColor(Color.RED);
+                g.fillOval((int)e.getX(), (int)e.getY(), 16, 16);
+                g.drawImage(lionImage, (int)(e.getX()), (int)(e.getY()), null);
+
             }
             else if(e.getClass() == Giraffe.class){
-                g.drawImage(giraffeImage, (int)(e.getX()*5), (int)(e.getY()*5), null);
+                g.drawImage(giraffeImage, (int)(e.getX()), (int)(e.getY()), null);
+            }
+
+            //DRAW BARS FOR DEBUGGING PORPOISES:
+            if(e instanceof Animal){
+                g.setColor(Color.red);
+                g.fillRect((int)e.getX(), (int)e.getY()-8, (int)((Animal) e).getHealth()/6, 2);
+                g.setColor(Color.YELLOW);
+                g.fillRect((int)e.getX(), (int)e.getY()-11, (int)((Animal) e).hunger/6, 2);
+                //g.setColor(Color.CYAN);
+                //g.fillRect((int)e.getX(), (int)e.getY()-22, (int)((Animal) e).thirst/6, 5);
             }
             //g.fillOval((int)e.getX() * 5, (int)e.getY() * 5, 16, 16);
 
         }
+
     }
 
     @Override
@@ -161,21 +151,35 @@ public class SimulationRenderer extends JPanel implements ActionListener, MouseL
             } else {
                 t.start();
             }
-        } else if(e.getActionCommand().equals("Zebra")){
-            currentAnimal = 0;
-        } else if(e.getActionCommand().equals("Lion")){
-            currentAnimal = 1;
-        } else if(e.getActionCommand().equals("Giraffe")){
-            currentAnimal = 2;
-        } else if(e.getActionCommand().equals("Todd")){
-            currentAnimal = 3;
         }
+        else if(e.getActionCommand().equals("zoomIn")) {
+            System.out.println("ZOOMIN");
+            zoomx+=0.2;
+            zoomy+=0.2;
+        }
+        else if(e.getActionCommand().equals("zoomOut")) {
+            System.out.println("ZOOMOUT");
+            zoomx-=0.1;
+            zoomy-=0.1;
+            if(zoomx<=0.05)
+                zoomx=0.1;
+            if(zoomy<=0.05)
+                zoomy=0.1;
+        }
+        repaint();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        Position mousePos = new Position(e.getX()/5, e.getY()/5);
-        simulation.generateAnimal(currentAnimal, mousePos);
+        Position mousePos = new Position(e.getX()/zoomx, e.getY()/zoomy);
+        if(SwingUtilities.isLeftMouseButton(e)) {
+            simulation.generateAnimal(currentAnimal, mousePos);
+            repaint();
+        }
+        if(SwingUtilities.isRightMouseButton(e)) {
+            simulation.generateFood(mousePos, 10);
+            repaint();
+        }
     }
 
     @Override
@@ -186,8 +190,47 @@ public class SimulationRenderer extends JPanel implements ActionListener, MouseL
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
 
-            currentAnimal=e.getWheelRotation()%4;
-            System.out.println(currentAnimal);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Position mousePos = new Position(e.getX() / zoomx, e.getY() / zoomy);
+        if(e.getButton() == MouseEvent.BUTTON1) {
+            simulation.generateAnimal(currentAnimal, mousePos);
+            repaint();
+        }
+        if(e.getButton() == MouseEvent.BUTTON3){
+            simulation.generateFood(mousePos, 10);
+            repaint();
+        }
+        if(e.getButton() == MouseEvent.BUTTON2){
+            System.out.println("SWITCHING TO NEXT ANIMAL");
+            if(currentAnimal<3){
+                currentAnimal++;
+            }else{
+                currentAnimal=0;
+            }
+        }
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }

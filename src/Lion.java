@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class Lion extends Animal{
     static int defaultRank = 50;
-    static double defaultSightRadius = 30;
+    static double defaultSightRadius = 120;
     static double defaultHealth = 100;
     static double defaultHunger = 100;
     static double defaultThirst = 100;
-    static double defaultMaxSpeed = 7.2;
+    static double defaultMaxSpeed = 6.7;
 
 
     public Lion(Map map, Position pos, double direction, boolean gender){
@@ -17,6 +17,12 @@ public class Lion extends Animal{
         rank = defaultRank;
         maxSpeed = defaultMaxSpeed;
         speed = maxSpeed;
+        health = defaultHealth;
+
+        enemyFear = -500;
+        foodTastiness = 500;
+        preyTastiness = 1000;
+        kinFriendliness = 5;
     }
     public ArrayList<Entity> see(int sightradius){
         // entitiesWithinRadius(sightradius);

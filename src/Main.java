@@ -17,7 +17,7 @@ public  class Main {
 
         window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
 
-        window.setSize(1000, 1000);
+        window.setSize(500, 500);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
@@ -43,15 +43,17 @@ public  class Main {
         playBtn.setActionCommand("playPause");
         controls.add(playBtn);
 
-        /*String[] animalNames = new String[] {"Zebra", "Lion",
-                "Giraffe", "Todd"};
-        JComboBox<String> animalSelectionBox = new JComboBox<>(animalNames);
-        animalSelectionBox.addActionListener(simulationRenderer);
-        animalSelectionBox.setActionCommand("selectionBox");
-        controls.add(animalSelectionBox);
-        */
+        JButton zoomInBtn = new JButton("Zoom In");
+        zoomInBtn.setSize(new Dimension(50, 20));
+        zoomInBtn.addActionListener(simulationRenderer);
+        zoomInBtn.setActionCommand("zoomIn");
+        controls.add(zoomInBtn);
 
-
+        JButton zoomOutBtn = new JButton("Zoom Out");
+        zoomOutBtn.setSize(new Dimension(50, 20));
+        zoomOutBtn.addActionListener(simulationRenderer);
+        zoomOutBtn.setActionCommand("zoomOut");
+        controls.add(zoomOutBtn);
 
         window.add(controls);
 

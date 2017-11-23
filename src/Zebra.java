@@ -3,11 +3,12 @@ import java.util.ArrayList;
 public class Zebra extends Animal{
     //these are all of the 'properties' of a zebra
     static int defaultRank = 5;
-    static double defaultSightRadius = 30;
+    static double defaultSightRadius = 70;
     static double defaultHealth = 100;
     static double defaultHunger = 100;
     static double defaultThirst = 100;
     static double defaultMaxSpeed = 7.2;
+
 
 
     public Zebra(Map map, Position pos, double direction, boolean gender){
@@ -19,8 +20,13 @@ public class Zebra extends Animal{
         rank = defaultRank;
         maxSpeed = defaultMaxSpeed;
         speed = maxSpeed;
-
-
+        health = defaultHealth;
+        //IDK the best way to do this
+        enemyFear = -100000;
+        foodTastiness = 7500;
+        //IM VEGAN:
+        preyTastiness = 0;
+        kinFriendliness = 500;
 
     }
     public ArrayList<Entity> see(int sightradius){

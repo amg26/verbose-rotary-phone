@@ -34,7 +34,7 @@ public class Map {
 
     //NS and EW are -1, 0 or 1
     public double getElevation(Position pos, int NS, int EW){
-        if((pos.getX()<5 || pos.getX()>map.length*5-5) || (pos.getY()<5 || pos.getY()>map[0].length*5-5)) {
+        if((pos.getX()<5 || pos.getX()>map.length-5) || (pos.getY()<5 || pos.getY()>map[0].length-5)) {
             return -3.14159;
         }else {
             return map[(int) Math.round(pos.getY()) + NS][(int) Math.round(pos.getX()) + EW];
@@ -60,7 +60,7 @@ public class Map {
 
         for(int i = 0; i < map.length; i++) {
             for(int j = 0; j < map[0].length; j++) {
-                str.append(map[i][j] + " ");
+                //str.append(map[i][j] + " ");
             }
 
             str.append("\n");

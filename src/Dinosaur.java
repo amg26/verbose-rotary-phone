@@ -21,6 +21,7 @@ public class Dinosaur extends Animal{
         rank = defaultRank;
         maxSpeed = defaultMaxSpeed;
         speed = maxSpeed;
+        health = defaultHealth;
 
 
     }

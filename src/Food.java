@@ -7,7 +7,6 @@ public class Food extends Entity {
     //make a constructor for food
     public Food ( Map map, Position pos, int size, int rank) {
         super(map,pos,0);
-        System.out.println("MAKIN SOME FOOD");
         this.speed = 0;
         this.size = size;
         this.rank = 0;
@@ -24,6 +23,10 @@ public class Food extends Entity {
     {
         //System.out.println("DONT MOVE PLZ");
 
+    }
+
+    public int getRank(){
+        return rank;
     }
 
     public void regenerate (double size){

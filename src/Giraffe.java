@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Giraffe extends Animal{
-    static int defaultRank = 5;
+    static int defaultRank = 79;
     static double defaultSightRadius = 30;
     static double defaultHealth = 100;
     static double defaultHunger = 100;
@@ -16,6 +16,12 @@ public class Giraffe extends Animal{
         rank = defaultRank;
         maxSpeed = defaultMaxSpeed;
         speed = maxSpeed;
+        health = defaultHealth;
+
+        enemyFear = -1000;
+        foodTastiness = 7500;
+        preyTastiness = 0;
+        kinFriendliness = 500;
     }
     public ArrayList<Entity> see(int sightradius){
         // entitiesWithinRadius(sightradius);

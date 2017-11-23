@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.Random;
 
-import static java.lang.Math.max;
 import static java.lang.Math.sqrt;
 
 /*
@@ -44,14 +42,16 @@ public abstract class Entity {
     //based on needs + want to reproduce + not die
     public void tick(ArrayList<Entity> closeEntities) {
         //empty
+
     }
 
 
 
 
-
+    //TODO: should probably be only fed r's less than 1 or some predetermined number.
     public void movePolar(double r, double theta){
         Position initialPos = new Position(pos);
+
 
         //NE CCW to E
         if(theta>piOver8 && theta < 3*piOver8)
@@ -71,6 +71,7 @@ public abstract class Entity {
         else
             speedModifier = map.slope(initialPos, 0, 1);
 
+        //System.out.println(speedModifier);
         double nextElevation = 0;
 
         //HAHAHAHA IDK
@@ -89,7 +90,7 @@ public abstract class Entity {
                 nextElevation = map.getElevation(initialPos, -1, 0);
             else if (theta > 13 * piOver8 && theta < 15 * piOver8)
                 nextElevation = map.getElevation(initialPos, -1, 1);
-            else if ((initialPos.getX() < 5 || initialPos.getX() > map.getMap().length * 5 - 5) || (initialPos.getY() < 5 || initialPos.getY() > map.getMap()[0].length * 5 - 5))
+            else if ((initialPos.getX() < 5 || initialPos.getX() > map.getMap().length - 5) || (initialPos.getY() < 5 || initialPos.getY() > map.getMap()[0].length - 5))
                 nextElevation = map.getElevation(initialPos, 0, 1);
         }
 
@@ -108,8 +109,8 @@ public abstract class Entity {
 
 
 
-        pos.addX(((speed/5)*r*Math.cos(theta)));//-Math.abs(speed*(speedModifier/10))*r*Math.cos(theta));
-        pos.addY(((speed/5)*r*Math.sin(theta)));//-Math.abs(speed*(speedModifier/10))*r*Math.sin(theta));
+        pos.addX((speed/5)*r*Math.cos(theta));//+speedModifier/5);//-Math.abs(speed*(speedModifier/10))*r*Math.cos(theta));
+        pos.addY((speed/5)*r*Math.sin(theta));//+speedModifier/5);//-Math.abs(speed*(speedModifier/10))*r*Math.sin(theta));
         //pos.addX(speed);
         //pos.addY(speed);
 
@@ -131,6 +132,25 @@ public abstract class Entity {
             direction-=(2*Math.PI);
         }
         movePolar(speed, direction);
+    }
+
+    public void move(Vector2D motion){
+        //kindof like an activation function to prevent going faster than possible speed:
+        /*                              _______
+        *                     __/----```
+        *                    /      atan has approx. this shape
+        *                  _/
+        * _______,,,,...--/
+        * */
+        movePolar(Math.atan(motion.magnitude), motion.direction);
+    }
+
+    public void moveAway(Position target){
+        double x = (pos.getX() - target.getX())/(sqrt(Math.pow(target.getX()-getX(),2)+Math.pow(target.getY()-getY(),2)))*speed;
+        double y = (pos.getY() - target.getY())/(sqrt(Math.pow(target.getX()-getX(),2)+Math.pow(target.getY()-getY(),2)))*speed;
+
+        Position escape = new Position(x+pos.getX(), y+pos.getY());
+        move(escape);
     }
 
     //replace void with ArrayList<Entity> vv

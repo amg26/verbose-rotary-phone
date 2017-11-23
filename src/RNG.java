@@ -28,5 +28,7 @@ public class RNG {
         return rand.nextBoolean();
     }
 
+    public double nextAngle() {return rand.nextDouble()*2*Math.PI;}
+
 
 }

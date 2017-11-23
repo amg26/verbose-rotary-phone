@@ -1,6 +1,8 @@
 import javafx.geometry.Pos;
 
+import java.awt.image.RGBImageFilter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Simulation {
@@ -8,6 +10,7 @@ public class Simulation {
     private ArrayList<Entity> entities;
     private ArrayList<Animal> animals;
     private ArrayList<Food> food;
+    int counter = 0;
 
     public Simulation() {
         map = new Map(1000, 1000);
@@ -16,14 +19,16 @@ public class Simulation {
         animals = new ArrayList<>();
         food = new ArrayList<>();
 
-        for(int i = 0; i < 1; i++) {
+
+        /*
+        for(int i = 0; i < 10; i++) {
             Position pos = new Position((int) ((Math.random() * map.getMap()[0].length)), (int) ((Math.random() * map.getMap().length)));
             //System.out.println(pos);
             if(!map.isUnderwater(pos)) {
                 //System.out.println(map.getElevation(pos) - Map.WATER_DEPTH);
-                //Food pieceOfFood = new Food(map ,pos, 5, 0 );
-                //entities.add(pieceOfFood);
-                //food.add(pieceOfFood);
+                Food pieceOfFood = new Food(map ,new Position(pos), 5, 0 );
+                entities.add(pieceOfFood);
+                food.add(pieceOfFood);
                 Lion lion = new Lion(map, pos, 1, RNG.getInstance().nextBoolean());
                 entities.add(lion);
                 animals.add(lion);
@@ -61,6 +66,10 @@ public class Simulation {
             }
         }
 
+*/
+
+
+
         /*
         for(int i=0; i<2; i++){
             Position pos = new Position(i*30+100, i*30+100);
@@ -71,60 +80,96 @@ public class Simulation {
 
     public void generateAnimal(int type, Position pos){
 
-        Giraffe g = new Giraffe(map, pos, 0, RNG.getInstance().nextBoolean());
-        entities.add(g);
-        animals.add(g);
-        /*
         switch(type){
             case 0:
-                entities.add(new Zebra(map, pos,2, rand.nextBoolean()));
+                Zebra z = new Zebra(map, pos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                entities.add(z);
+                animals.add(z);
                 break;
             case 1:
-                entities.add(new Lion(map, pos, 2, rand.nextBoolean()));
+                Lion l = new Lion(map, pos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                entities.add(l);
+                animals.add(l);
                 break;
             case 2:
-                entities.add(new Giraffe(map, pos, 2, rand.nextBoolean()));
+                Giraffe g = new Giraffe(map, pos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                entities.add(g);
+                animals.add(g);
                 break;
             case 3:
-                entities.add(new Todd(map, pos, 2));
+                Todd t = new Todd(map, pos, RNG.getInstance().nextAngle());
+                entities.add(t);
+                animals.add(t);
                 break;
             default:
-                entities.add(new Zebra(map, pos, 2, rand.nextBoolean()));
+                Zebra defz = new Zebra(map, pos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                entities.add(defz);
+                animals.add(defz);
 
         }
-        */
+
+    }
+
+    public void generateFood(Position pos, int amount){
+        Food f = new Food(map, pos, amount, 0);
+        entities.add(f);
+        food.add(f);
     }
 
     public void tick() {
+        counter++;
+        if(counter%100==0)
+            System.out.println("TICK "+counter);
 
         for(Entity e : entities) {
             e.tick(entitiesWithinRadius(e));
             //e.tick(entities);
         }
-        /*
-        for (Entity e : entities){
-            if( e.pregnant){
-                Position baby = new Position(e.getPosition().getX(), e.getPosition().getY());
-                if(e.getClass() == Zebra.class){
-                    entities.add(new Zebra( map, baby, e.maxspeed, rand.nextBoolean()));
-                    e.pregnant = false;
+
+
+        ArrayList<Animal> freshBabies = new ArrayList<>();
+
+        for (Animal a : animals){
+            if( a.pregnant){
+                Position babyPos = new Position(a.getX(), a.getY());
+                if(a.getClass() == Zebra.class){
+                    Zebra baby = new Zebra( map, babyPos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                    freshBabies.add(baby);
+                    a.pregnant = false;
+                }
+                if(a.getClass() == Giraffe.class){
+                    Giraffe baby = new Giraffe( map, babyPos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                    freshBabies.add(baby);
+                    a.pregnant = false;
+                }
+                if(a.getClass() == Lion.class){
+                    Lion baby = new Lion( map, babyPos, RNG.getInstance().nextAngle(), RNG.getInstance().nextBoolean());
+                    freshBabies.add(baby);
+                    a.pregnant = false;
+                }
+                if(a.getClass() == Todd.class){
+                    Todd baby = new Todd( map, babyPos, RNG.getInstance().nextAngle());
+                    freshBabies.add(baby);
+                    a.pregnant = false;
                 }
             }
         }
-        */
+        entities.addAll(freshBabies);
+        animals.addAll(freshBabies);
 
-        for (int i = food.size()-1; i > 0; i --){
+
+
+        for (int i = food.size()-1; i >= 0; i --){
             if (food.get(i).getSize() <= 1){
-                food.remove(i);
                 entities.remove(food.get(i));
+                food.remove(i);
             }
         }
-        for (int i = animals.size()-1; i > 0; i --){
+        for (int i = animals.size()-1; i >= 0; i --){
             //System.out.println(entities.get(i).health);
             if( animals.get(i).isDead() ){
-                animals.remove(i);
-                //hmmm
                 entities.remove(animals.get(i));
+                animals.remove(i);
             }
         }
     }
@@ -143,6 +188,11 @@ public class Simulation {
 
     public ArrayList<Entity> getEntities() {
         return entities;
+    }
+
+    //TEMPORARY
+    public Entity getZebra(){
+        return animals.get(0);
     }
 
     public Map getMap() {

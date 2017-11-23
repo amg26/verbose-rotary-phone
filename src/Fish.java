@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 
 public class Fish extends Animal{
@@ -23,6 +21,7 @@ public class Fish extends Animal{
         rank = defaultRank;
         maxSpeed = defaultMaxSpeed;
         speed = maxSpeed;
+        health = defaultHealth;
 
 
     }
